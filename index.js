@@ -30,7 +30,7 @@ bot.on('message', msg => { // Evento dispara sempre que alguém manda uma mensag
                 // Para interagir com o usuário utilizamos o objeto msg, que é gerado pelo evento. Este objeto 
                 // Permite que a gente mande mensagens, pegue as informações do autor da mensagem, mandar uma mensagem
                 // no canal em que o autor enviou o comando, entre outros.
-                msg.channel.send('Pang.');
+                msg.channel.send('Pong.');
 
                 break;
             case 'somar': // EXEMPLO DE UM COMANDO COM VÁRIOS ARGUMENTOS
