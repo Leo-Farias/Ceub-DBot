@@ -3,14 +3,13 @@ require('dotenv').config()
 const Discord = require('discord.js');
 const bot = new Discord.Client();
 
-// Configurações base
-const config = require('./src/json/config.json');
+// Configurações base <.env>
 const token = process.env.API_TOKEN
-const PREFIX = config.prefix;
+const PREFIX = process.env.PREFIX
 
 // Obtendo demais recursos do projeto.
 const cm = require('./src/js/comandos.js');
-
+const PongController = require('./src/controllers/pong.controller.js')
 
 bot.on('ready', () => {
 	console.log("=== BOT INICIADO ===");
@@ -31,7 +30,7 @@ bot.on('message', msg => { // Evento dispara sempre que alguém manda uma mensag
                 // Para interagir com o usuário utilizamos o objeto msg, que é gerado pelo evento. Este objeto 
                 // Permite que a gente mande mensagens, pegue as informações do autor da mensagem, mandar uma mensagem
                 // no canal em que o autor enviou o comando, entre outros.
-                msg.channel.send('Pong.');
+                PongController.ping(msg)
 
                 break;
             case 'somar': // EXEMPLO DE UM COMANDO COM VÁRIOS ARGUMENTOS
