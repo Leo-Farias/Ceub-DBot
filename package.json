@@ -1,5 +1,12 @@
 {
   "dependencies": {
-    "discord.js": "^12.3.1"
+    "discord.js": "^12.3.1",
+    "dotenv": "^8.2.0"
+  },
+  "scripts": {
+    "dev": "nodemon ."
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
   }
 }

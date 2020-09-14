@@ -1,10 +1,11 @@
+require('dotenv').config()
 // Instanciando o bot.
 const Discord = require('discord.js');
 const bot = new Discord.Client();
 
 // Configurações base
 const config = require('./src/json/config.json');
-const token = config.token;
+const token = process.env.API_TOKEN
 const PREFIX = config.prefix;
 
 // Obtendo demais recursos do projeto.
