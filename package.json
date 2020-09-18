@@ -5,7 +5,8 @@
     "shelljs": "^0.8.4"
   },
   "scripts": {
-    "dev": "nodemon ."
+    "start": "node ./src/index.js",
+    "dev": "nodemon --ignore node_modules ./src/index.js"
   },
   "devDependencies": {
     "nodemon": "^2.0.4"

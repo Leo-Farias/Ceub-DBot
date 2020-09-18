@@ -2,7 +2,7 @@ const contentParser = require('../utils/command-parser')
 const runCode = require('../utils/code-runner')
 
 function runCommand(msg){
-    userCommand = contentParser(msg.content)
+    const userCommand = contentParser(msg.content)
     console.log(`INFOS:
     USUARIO: ${msg.author.username}
     USER_ID: ${msg.author.id}
@@ -11,10 +11,15 @@ function runCommand(msg){
     ESTRUTURA_COMANDO: ${contentParser(msg.content, 'List')}
     `)
     
-    runCode(userCommand.parameter).then((result) => {
-        console.log("Result:", result)
-        return msg.channel.send(result);
-    })
+    runCode(userCommand.parameter)
+        .then((result) => {
+            console.log("Result:", result)
+            return msg.channel.send(result)
+        })
+        .catch((e) => {
+            console.log(e)
+            return msg.channel.send("Erro inesperado")
+        })
 }
 
 

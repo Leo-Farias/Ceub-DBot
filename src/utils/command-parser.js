@@ -1,6 +1,6 @@
 const PREFIX = process.env.PREFIX
 
-parseCommand = (content, returnType = 'Object') => {
+const parseCommand = (content, returnType = 'Object') => {
     const args = content.substring(PREFIX.length).split(" ")
 
     const commandInput = content.slice(PREFIX.length + args[0].length).trim()
