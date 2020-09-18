@@ -9,7 +9,9 @@ const PREFIX = process.env.PREFIX
 
 // Obtendo demais recursos do projeto.
 const cm = require('./src/js/comandos.js');
-const PongController = require('./src/controllers/pong.controller.js')
+const { genLetterAsEmoji } = require('./src/utils/emoji-letters.js');
+const PongController = require('./src/controllers/pong.controller.js');
+const quizzController = require('./src/controllers/quizz.controller.js');
 
 bot.on('ready', () => {
 	console.log("=== BOT INICIADO ===");
@@ -43,6 +45,57 @@ bot.on('message', msg => { // Evento dispara sempre que alguém manda uma mensag
                 } 
                 else 
                     msg.channel.send(rs.erro);
+                
+                break;
+            case 'quizz': 
+                let perguntas = quizzController.obterPerguntas();
+                const ALTERNATIVAS = [ genLetterAsEmoji('a'), genLetterAsEmoji('b'), genLetterAsEmoji('c'), genLetterAsEmoji('d')];
+                let pContador = 0;
+
+                quizzController.handleQuizz(msg, perguntas, ALTERNATIVAS, pContador);
+                // let [embed, alt_correta] = quizzController.handlePergunta(perguntas.splice(0, 1)[0], pContador+1);
+                // msg.channel.send({ embed }).then( message => {
+                //     alternativas.forEach(alt => message.react(alt));
+
+                //     const filter = (reaction, user) => 
+                //     alternativas.includes(reaction.emoji.name) && user.id === msg.author.id;
+
+                //     const msgReaction = message.createReactionCollector(filter, { time: 10000 });
+
+                //     msgReaction.on('collect', r => {
+                //         if(r.emoji.name === alternativas[alt_correta]) {
+                //             msg.channel.send('Você conseguiu!');
+                //             msgReaction.stop();
+                //         }
+                //         else{
+                //             msg.channel.send('Tente novamente!');
+                //         } 
+                //     })
+                //     msgReaction.on('end', collected => {
+                        
+                //         message.channel.send('Tempo esgotado.');
+                //     });
+                // });
+
+                // perguntas.forEach((pergunta, index) => {
+                //     let [embed, alt_correta] = quizzController.handlePergunta(pergunta, index+1);
+
+                //     msg.channel.send({ embed }).then( message => {
+                //         alternativas.forEach(alt => message.react(alt));
+
+                //         const filter = (reaction, user) => 
+                //         alternativas.includes(reaction.emoji.name) && user.id === msg.author.id;
+
+                //         const msgReaction = message.createReactionCollector(filter, { time: 15000 });
+
+                //         msgReaction.on('collect', r => {
+                //             console.log(r === alternativas[alt_correta]);
+                //             r === alternativas[alt_correta] 
+                //             ? msg.channel.send('Você conseguiu!')
+                //             : msg.channel.send('Tente novamente!');
+                //         })
+                //     });
+                // });
                 
                 break;
         }
