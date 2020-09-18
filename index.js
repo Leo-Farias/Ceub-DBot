@@ -9,7 +9,7 @@ const PREFIX = process.env.PREFIX
 
 // Obtendo demais recursos do projeto.
 const cm = require('./src/js/comandos.js');
-const PongController = require('./src/controllers/pong.controller.js')
+const CommandController = require('./src/controllers/command.controller.js')
 
 bot.on('ready', () => {
 	console.log("=== BOT INICIADO ===");
@@ -30,7 +30,7 @@ bot.on('message', msg => { // Evento dispara sempre que alguém manda uma mensag
                 // Para interagir com o usuário utilizamos o objeto msg, que é gerado pelo evento. Este objeto 
                 // Permite que a gente mande mensagens, pegue as informações do autor da mensagem, mandar uma mensagem
                 // no canal em que o autor enviou o comando, entre outros.
-                PongController.ping(msg)
+                msg.channel.send("Pong");
 
                 break;
             case 'somar': // EXEMPLO DE UM COMANDO COM VÁRIOS ARGUMENTOS
@@ -45,6 +45,7 @@ bot.on('message', msg => { // Evento dispara sempre que alguém manda uma mensag
                     msg.channel.send(rs.erro);
                 
                 break;
+            case 'run': CommandController.runCommand(msg)
         }
     }
 });
