@@ -36,8 +36,7 @@ const handlePergunta = (pergunta, INDEX_PERGUNTA) => {
         color: 0x45f542,
         title: `Questão ${INDEX_PERGUNTA} de 4:`,
         fields: [
-            { name: `${INDEX_PERGUNTA}. ${label}`, value: '\u200B' },
-            { name: 'Alternativas', value: alternativas.map( (alt, index) => `${INDEX_ALTERNATIVA[index]}${alt}`).join("\n") }
+            { name: `${INDEX_PERGUNTA}. ${label}`, value: "**Alternativas** \n" + alternativas.map( (alt, index) => `${INDEX_ALTERNATIVA[index]}${alt}`).join("\n") }
         ],
         timestamp: new Date(),
     };
@@ -45,22 +44,18 @@ const handlePergunta = (pergunta, INDEX_PERGUNTA) => {
     return [perguntaEmbed, ALT_CORRETA_POS];
 }
 
-const handleQuizz = (msg, perguntas, alternativas, pContador) => {
+const handleQuizz = (msg, perguntas, alternativas, pContador, bot) => {
 
     let [embed, alt_correta] = handlePergunta(perguntas[0], pContador+1);
-    console.log('=========================');
-    console.log('Alternativa Correta: ', alt_correta);
-    console.log('=========================');
     msg.channel.send({ embed }).then( message => {
         alternativas.forEach(alt => message.react(alt));
 
         const filter = (reaction, user) => 
         alternativas.includes(reaction.emoji.name) && user.id === msg.author.id;
 
-        const msgReaction = message.createReactionCollector(filter, { time: 10000 });
+        const msgReaction = message.createReactionCollector(filter, { time: 15000 });
 
         msgReaction.on('collect', r => {
-            console.log('Alternativa Selecionada: ', alternativas.indexOf(r.emoji.name));
             if(r.emoji.name === alternativas[alt_correta]) {
                 msg.channel.send('Você conseguiu!');
                 msgReaction.stop();
@@ -72,12 +67,18 @@ const handleQuizz = (msg, perguntas, alternativas, pContador) => {
         msgReaction.on('end', collected => {
             // removendo 1° item  da lista de perguntas.
             perguntas.splice(0, 1);
-
+            
             // Se não tiver próxima pergunta então quizz foi finalizado.
-            if (!perguntas[0])
-                message.channel.send('Quizz Finalizado.');
+            if (!perguntas[0] || collected.size === 0) {
+                
+                collected.size === 0
+                ? message.channel.send('⏲️ Quizz Finalizado por **inatividade**. ⏲️')
+                : message.channel.send('Quizz Finalizado.');
+
+                bot.quizz[msg.guild.id] = false; // Setando quizz como false possibilitando o início de outro quizz.
+            }
             else
-                handleQuizz(msg, perguntas, alternativas, ++pContador);
+                handleQuizz(msg, perguntas, alternativas, ++pContador, bot);
             
         });
     });
