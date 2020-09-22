@@ -56,7 +56,7 @@ bot.on('message', msg => { // Evento dispara sempre que alguém manda uma mensag
                     const ALTERNATIVAS = [ genLetterAsEmoji('a'), genLetterAsEmoji('b'), genLetterAsEmoji('c'), genLetterAsEmoji('d')];
                     let pContador = 0;
 
-                    quizzController.handleQuizz(msg, perguntas, ALTERNATIVAS, pContador, bot);
+                    quizzController.handleQuizz(msg, bot, perguntas, perguntas.length, ALTERNATIVAS, pContador);
                 }
                 else 
                     msg.channel.send(`Já existe um quizz ocorrendo neste momento.`);

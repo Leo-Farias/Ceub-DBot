@@ -1,5 +1,7 @@
 const perguntas = require('../assets/perguntas.json');
+const { MessageAttachment } = require('discord.js');
 const { shuffle } = require('../utils/array-handler.js');
+const defaultEmbeder = require('../utils/default-embeder');
 
 /**
  * Embaralhar e receber perguntas do banco de dados.
@@ -17,7 +19,7 @@ const obterPerguntas = () => {
     return todasPerguntas;
 }
 
-const handlePergunta = (pergunta, INDEX_PERGUNTA) => {
+const handlePergunta = (pergunta, INDEX_PERGUNTA, num_perguntas) => {
     let { label, alternativas, alternativaCorreta } = pergunta;
     const INDEX_ALTERNATIVA = [':regional_indicator_a: - ', ':regional_indicator_b: - ', ':regional_indicator_c: - ', ':regional_indicator_d: - '];
     
@@ -34,9 +36,12 @@ const handlePergunta = (pergunta, INDEX_PERGUNTA) => {
     // Montando pergunta embed.
     const perguntaEmbed = {
         color: 0x45f542,
-        title: `Questão ${INDEX_PERGUNTA} de 4:`,
+        author: {
+            name: `Questão ${INDEX_PERGUNTA} de ${num_perguntas}:`,
+            icon_url: 'attachment://easy_3.png',
+        },
         fields: [
-            { name: `${INDEX_PERGUNTA}. ${label}`, value: "**Alternativas** \n" + alternativas.map( (alt, index) => `${INDEX_ALTERNATIVA[index]}${alt}`).join("\n") }
+            { name: `${INDEX_PERGUNTA}. ${label}`, value: "\u200B\n**Alternativas** \n\n" + alternativas.map( (alt, index) => `${INDEX_ALTERNATIVA[index]}${alt}`).join("\n\n") }
         ],
         timestamp: new Date(),
     };
@@ -44,16 +49,17 @@ const handlePergunta = (pergunta, INDEX_PERGUNTA) => {
     return [perguntaEmbed, ALT_CORRETA_POS];
 }
 
-const handleQuizz = (msg, perguntas, alternativas, pContador, bot) => {
+const handleQuizz = (msg, bot, perguntas, num_perguntas, alternativas, pContador) => {
+    const file = new MessageAttachment('./src/assets/easy_3.png');
+    let [embed, alt_correta] = handlePergunta(perguntas[0], pContador+1, num_perguntas);
 
-    let [embed, alt_correta] = handlePergunta(perguntas[0], pContador+1);
-    msg.channel.send({ embed }).then( message => {
-        alternativas.forEach(alt => message.react(alt));
+    msg.channel.send({ files: [file], embed }).then( message => {
+        alternativas.forEach(alt => message.react(alt)); // Reagindo as alternativas (a, b, c, d).
 
         const filter = (reaction, user) => 
-        alternativas.includes(reaction.emoji.name) && user.id === msg.author.id;
+        alternativas.includes(reaction.emoji.name) && user.id === msg.author.id; // Filtro da coleta.
 
-        const msgReaction = message.createReactionCollector(filter, { time: 15000 });
+        const msgReaction = message.createReactionCollector(filter, { time: 15000 }); // Se quiser mudar o tempo alterar time
 
         msgReaction.on('collect', r => {
             if(r.emoji.name === alternativas[alt_correta]) {
@@ -69,16 +75,19 @@ const handleQuizz = (msg, perguntas, alternativas, pContador, bot) => {
             perguntas.splice(0, 1);
             
             // Se não tiver próxima pergunta então quizz foi finalizado.
+            // Ou se ninguém responder nenhuma alternativa.
             if (!perguntas[0] || collected.size === 0) {
                 
                 collected.size === 0
-                ? message.channel.send('⏲️ Quizz Finalizado por **inatividade**. ⏲️')
-                : message.channel.send('Quizz Finalizado.');
+                ? defaultEmbeder.sendEmbed(msg, 'ERROR', 'Quizz Finalizado', [
+                    { name:'\u200B', value: '⏲️ **Inatividade** ⏲️'}])
+                : defaultEmbeder.sendEmbed(msg, 'CORRECT', 'Quizz Finalizado', [
+                    { name:'\u200B', value: '✅ Todas as Perguntas foram resolvidas. ✅'}]);
 
                 bot.quizz[msg.guild.id] = false; // Setando quizz como false possibilitando o início de outro quizz.
             }
             else
-                handleQuizz(msg, perguntas, alternativas, ++pContador, bot);
+                handleQuizz(msg, bot, perguntas, num_perguntas, alternativas, ++pContador);
             
         });
     });
