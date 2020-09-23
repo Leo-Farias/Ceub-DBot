@@ -2,6 +2,7 @@ const perguntas = require('../assets/perguntas.json');
 const { MessageAttachment } = require('discord.js');
 const { shuffle } = require('../utils/array-handler.js');
 const defaultEmbeder = require('../utils/default-embeder');
+const { sendEmbed } = require('../utils/default-embeder');
 
 /**
  * Embaralhar e receber perguntas do banco de dados.
@@ -19,7 +20,7 @@ const obterPerguntas = () => {
     return todasPerguntas;
 }
 
-const handlePergunta = (pergunta, INDEX_PERGUNTA, num_perguntas) => {
+const handlePergunta = (pergunta, INDEX_PERGUNTA, num_perguntas, tempo) => {
     let { label, alternativas, alternativaCorreta } = pergunta;
     const INDEX_ALTERNATIVA = [':regional_indicator_a: - ', ':regional_indicator_b: - ', ':regional_indicator_c: - ', ':regional_indicator_d: - '];
     
@@ -44,23 +45,33 @@ const handlePergunta = (pergunta, INDEX_PERGUNTA, num_perguntas) => {
             { name: `${INDEX_PERGUNTA}. ${label}`, value: "\u200B\n**Alternativas** \n\n" + alternativas.map( (alt, index) => `${INDEX_ALTERNATIVA[index]}${alt}`).join("\n\n") }
         ],
         timestamp: new Date(),
+        footer: {
+            text: `Tempo para responder a pergunta ${tempo/1000} segundos`,
+        },
     };
 
     return [perguntaEmbed, ALT_CORRETA_POS];
 }
 
 const handleQuizz = (msg, bot, perguntas, num_perguntas, alternativas, pContador) => {
-    const file = new MessageAttachment('./src/assets/easy_3.png');
-    let [embed, alt_correta] = handlePergunta(perguntas[0], pContador+1, num_perguntas);
+
+    const file = new MessageAttachment('./src/assets/easy_3.png'); // TODO PEGAR VALOR A PARTIR DE UM VALOR DA PERGUNTA
+
+    const tempo_pergunta = perguntas[0].time;
+    let [embed, alt_correta] = handlePergunta(perguntas[0], pContador+1, num_perguntas, tempo_pergunta);
+    
 
     msg.channel.send({ files: [file], embed }).then( message => {
         alternativas.forEach(alt => message.react(alt)); // Reagindo as alternativas (a, b, c, d).
 
-        const filter = (reaction, user) => 
-        alternativas.includes(reaction.emoji.name) && user.id === msg.author.id; // Filtro da coleta.
+        const filter = (reaction, user) => // Filtro da coleta.
+            alternativas.includes(reaction.emoji.name); 
 
-        const msgReaction = message.createReactionCollector(filter, { time: 15000 }); // Se quiser mudar o tempo alterar time
+        const msgReaction = message.createReactionCollector(filter, { time: tempo_pergunta }); // Se quiser mudar o tempo alterar time
 
+        setTimeout(() => {
+            sendEmbed(msg, 'ALERT', 'Tempo Acabando', [{name: '\u200B',value: `**Faltam ${(tempo_pergunta/1000)/2} segundos.**`}])
+        }, tempo_pergunta/2)
         msgReaction.on('collect', r => {
             if(r.emoji.name === alternativas[alt_correta]) {
                 msg.channel.send('Você conseguiu!');
@@ -70,6 +81,7 @@ const handleQuizz = (msg, bot, perguntas, num_perguntas, alternativas, pContador
                 msg.channel.send('Tente novamente!');
             } 
         })
+
         msgReaction.on('end', collected => {
             // removendo 1° item  da lista de perguntas.
             perguntas.splice(0, 1);

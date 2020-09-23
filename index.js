@@ -12,7 +12,7 @@ bot.quizz = {};
 const cm = require('./src/js/comandos.js');
 const { genLetterAsEmoji } = require('./src/utils/emoji-letters.js');
 const PongController = require('./src/controllers/pong.controller.js');
-const quizzController = require('./src/controllers/quizz.controller.js');
+const QuizzController = require('./src/controllers/quizz.controller.js');
 
 bot.on('ready', () => {
 	console.log("=== BOT INICIADO ===");
@@ -36,27 +36,15 @@ bot.on('message', msg => { // Evento dispara sempre que alguém manda uma mensag
                 PongController.ping(msg)
 
                 break;
-            case 'somar': // EXEMPLO DE UM COMANDO COM VÁRIOS ARGUMENTOS
-                // Eu geralmente chamo as resposta dos comandos de r(sigla_Do_Comando). rs => resposta somar.
-                let rs = cm.somar(args[1], args[2]); // OBS: Args[n] são do tipo string. Então é sempre bom validar eles nos comandos.
-                
-                if(!rs.erro) {
-                    msg.channel.send(`Resultado: ${ rs.resultado }`);
-                    msg.channel.send(`Dobro do seu resultado: ${ 2 * rs.resultado }`);
-                } 
-                else 
-                    msg.channel.send(rs.erro);
-                
-                break;
             case 'quizz':
                 if (!bot.quizz[msg.guild.id]) {
                     bot.quizz[msg.guild.id] = true; // Setando quest como true.
 
-                    let perguntas = quizzController.obterPerguntas();
+                    let perguntas = QuizzController.obterPerguntas();
                     const ALTERNATIVAS = [ genLetterAsEmoji('a'), genLetterAsEmoji('b'), genLetterAsEmoji('c'), genLetterAsEmoji('d')];
                     let pContador = 0;
 
-                    quizzController.handleQuizz(msg, bot, perguntas, perguntas.length, ALTERNATIVAS, pContador);
+                    QuizzController.handleQuizz(msg, bot, perguntas, perguntas.length, ALTERNATIVAS, pContador);
                 }
                 else 
                     msg.channel.send(`Já existe um quizz ocorrendo neste momento.`);
