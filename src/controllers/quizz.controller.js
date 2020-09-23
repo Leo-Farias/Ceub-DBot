@@ -65,13 +65,14 @@ const handleQuizz = (msg, bot, perguntas, num_perguntas, alternativas, pContador
         alternativas.forEach(alt => message.react(alt)); // Reagindo as alternativas (a, b, c, d).
 
         const filter = (reaction, user) => // Filtro da coleta.
-            alternativas.includes(reaction.emoji.name); 
+            alternativas.includes(reaction.emoji.name) && !user.bot; 
 
         const msgReaction = message.createReactionCollector(filter, { time: tempo_pergunta }); // Se quiser mudar o tempo alterar time
 
-        setTimeout(() => {
+        let cronometro = setTimeout(() => { // Criar cronometro para executar metade do tempo antes da pergunta finalizar.
             sendEmbed(msg, 'ALERT', 'Tempo Acabando', [{name: '\u200B',value: `**Faltam ${(tempo_pergunta/1000)/2} segundos.**`}])
-        }, tempo_pergunta/2)
+        }, tempo_pergunta/2);
+
         msgReaction.on('collect', r => {
             if(r.emoji.name === alternativas[alt_correta]) {
                 msg.channel.send('Você conseguiu!');
@@ -83,6 +84,8 @@ const handleQuizz = (msg, bot, perguntas, num_perguntas, alternativas, pContador
         })
 
         msgReaction.on('end', collected => {
+            // Limpando cronometro ( já que a pergunta foi respondida não tem razão para mandar o alerta ).
+            clearTimeout(cronometro);
             // removendo 1° item  da lista de perguntas.
             perguntas.splice(0, 1);
             
