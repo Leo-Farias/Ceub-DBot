@@ -52,3 +52,30 @@ bot.on('message', msg => { // Evento dispara sempre que alguém manda uma mensag
 
 // Inicializando o bot.
 bot.login(token);
+
+client.on("guildMemberAdd", async (member) => {
+    //id do servidor
+    let guild = client.guilds.cache.get("754114434292514856");
+    //id do canal
+    let channel = client.channels.cache.get("754721400496849006");
+    //emoji de boas vindas
+    let emoji_bv = member.guild.emojis.cache.find(emoji => emoji.name === ':eyes:')
+
+    if (guild != member.guild) {
+        return console.log ('teste');
+    }else{
+
+        let embed = new Discord.MessageEmbed()
+        .setcolor('#000000')
+        .setAuthor(member.user.tag, member.user.displayAvatarURL())
+        .setTitle(`${emoji_bv}Boas-vindas${emoji_bv}`)
+        .setDescription(`${member.user}, boas vindas ao server ${guild.name}! Atualmente estamos com ${member.guild.memberCount} membros.`)
+        .setThumbnail(member.user.displayAvatarURL({ dynamic: true, format: "png", size: 1024}))
+        .setFooter('ID do usuário: ' + member.user.id)
+        .setTimestamp();
+
+        await channel.send(embed)
+
+    }
+
+ })
