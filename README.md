@@ -6,3 +6,21 @@
 # Iniciar
 Para iniciar o bot basta utilizar o comando `node .`.
 > DICA: Se quiser agilizar seu desenvolvimento utilize o comando `nodemon .`, ele permite o Hot Reload no projeto. 
+
+# Comandos
+Para fins didaticos o PREFIXO do Bot sera considerado "!"
+## Pessoal
+* `!eu`
+* `!rankings`
+* `!ranking {"DUELO"|"PONTOS"}`
+## Quizz
+* `!quizz`
+## Livros
+* `!livro`
+* `!ler {NOME_TOPICO}`
+## Run Code
+* `!interpretadores`
+* `!run {INTERPRETADOR}`
+## Desafios
+
+## Duelo
