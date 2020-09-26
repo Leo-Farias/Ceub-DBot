@@ -1,0 +1,18 @@
+version: '3.0'
+services:
+  db:
+    image: mysql:5.7.31
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: uniceub
+      MYSQL_DATABASE: dev
+
+  bot:
+    build: ./bot
+    volumes: 
+      - ./bot:/opt/
+    environment:
+      ENV: DEVELOPMENT
+    entrypoint: "npm"
+    command: "run dev"

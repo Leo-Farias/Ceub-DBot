@@ -6,6 +6,8 @@ const bot = new Discord.Client();
 // Configurações base <.env>
 const token = process.env.API_TOKEN
 const PREFIX = process.env.PREFIX
+const ENV = process.env.ENV
+console.log("\n\n\n\n\n\n\nENV:" ,ENV, "\nPREFIX:", PREFIX)
 
 // Obtendo demais recursos do projeto.
 const cm = require('./src/js/comandos.js');
