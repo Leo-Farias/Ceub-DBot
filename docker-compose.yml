@@ -13,6 +13,6 @@ services:
     volumes: 
       - ./bot:/opt/
     environment:
-      ENV: DEVELOPMENT
+      ENV: development
     entrypoint: "npm"
     command: "run dev"
