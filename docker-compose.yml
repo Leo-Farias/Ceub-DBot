@@ -11,7 +11,7 @@ services:
   bot:
     build: .
     volumes: 
-      - ./bot:/opt/
+      - .:/opt/
     environment:
       ENV: development
     entrypoint: "npm"
