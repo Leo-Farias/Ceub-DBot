@@ -21,6 +21,8 @@ bot.on('ready', () => {
 
 bot.on('message', msg => { // Evento dispara sempre que alguém manda uma mensagem.
 
+    if (/windows|Windows|WINDOWS/.test(msg.content) && !msg.author.bot) msg.channel.send(`Linux > Windows`);
+
     // Filtra mensagem apenas para aqueles que começam com o prefixo e o autor não é outra conta de bot.
 	if (msg.content.substring(0, PREFIX.length) === PREFIX && !msg.author.bot) {
 
@@ -33,12 +35,12 @@ bot.on('message', msg => { // Evento dispara sempre que alguém manda uma mensag
                 // Para interagir com o usuário utilizamos o objeto msg, que é gerado pelo evento. Este objeto 
                 // Permite que a gente mande mensagens, pegue as informações do autor da mensagem, mandar uma mensagem
                 // no canal em que o autor enviou o comando, entre outros.
-                PongController.ping(msg)
+                PongController.ping(msg);
 
                 break;
             case 'quizz':
-                if (!bot.quizz[msg.guild.id]) {
-                    bot.quizz[msg.guild.id] = true; // Setando quest como true.
+                if (!bot.quizz[msg.channel.id]) {
+                    bot.quizz[msg.channel.id] = true; // Setando quest como true.
 
                     let perguntas = QuizzController.obterPerguntas();
                     const ALTERNATIVAS = [ genLetterAsEmoji('a'), genLetterAsEmoji('b'), genLetterAsEmoji('c'), genLetterAsEmoji('d')];

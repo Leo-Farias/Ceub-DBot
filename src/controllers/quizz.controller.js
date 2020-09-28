@@ -56,31 +56,31 @@ const handlePergunta = (pergunta, INDEX_PERGUNTA, num_perguntas, tempo) => {
 const handleQuizz = (msg, bot, perguntas, num_perguntas, alternativas, pContador) => {
 
     const file = new MessageAttachment('./src/assets/easy_3.png'); // TODO PEGAR VALOR A PARTIR DE UM VALOR DA PERGUNTA
-
+    const medalhas = ['🥇', '🥈', '🥉'];
     const tempo_pergunta = perguntas[0].time;
     let [embed, alt_correta] = handlePergunta(perguntas[0], pContador+1, num_perguntas, tempo_pergunta);
-    
+    let participantes = [];
+    let vencedores = [];
 
     msg.channel.send({ files: [file], embed }).then( message => {
         alternativas.forEach(alt => message.react(alt)); // Reagindo as alternativas (a, b, c, d).
 
         const filter = (reaction, user) => // Filtro da coleta.
-            alternativas.includes(reaction.emoji.name) && !user.bot; 
+            alternativas.includes(reaction.emoji.name) && !user.bot && !participantes.includes(user.id); 
 
         const msgReaction = message.createReactionCollector(filter, { time: tempo_pergunta }); // Se quiser mudar o tempo alterar time
 
         let cronometro = setTimeout(() => { // Criar cronometro para executar metade do tempo antes da pergunta finalizar.
-            sendEmbed(msg, 'ALERT', 'Tempo Acabando', [{name: '\u200B',value: `**Faltam ${(tempo_pergunta/1000)/2} segundos.**`}])
+            sendEmbed(msg, 'ALERT', 'Tempo Acabando', [{name: '\u200B',value: `**Faltam ${Math.round((tempo_pergunta/1000)/2)} segundos.**`}])
         }, tempo_pergunta/2);
 
-        msgReaction.on('collect', r => {
+        msgReaction.on('collect', (r, { id: idParticipante }) => {
+
+            participantes.push(idParticipante); // Adicionando participante na lista para filtrar
+
             if(r.emoji.name === alternativas[alt_correta]) {
-                msg.channel.send('Você conseguiu!');
-                msgReaction.stop();
+                vencedores.push(idParticipante);
             }
-            else{
-                msg.channel.send('Tente novamente!');
-            } 
         })
 
         msgReaction.on('end', collected => {
@@ -88,7 +88,15 @@ const handleQuizz = (msg, bot, perguntas, num_perguntas, alternativas, pContador
             clearTimeout(cronometro);
             // removendo 1° item  da lista de perguntas.
             perguntas.splice(0, 1);
+
             
+            if (vencedores.length > 0)
+                defaultEmbeder.sendEmbed(msg, 'CORRECT', 'Tempo Esgotado', 
+                    [{ name:'\u200B', value: 'Vencedores: \n' + vencedores.map( (v, index) => index <= 2 ? `${medalhas[index]} <@${v}>` : `${index + 1}° <@${v}>`).join('\n') }]);
+            else
+            defaultEmbeder.sendEmbed(msg, 'ERROR', 'Tempo Esgotado', [
+                { name:'\u200B', value: '**Ninguém acertou a pergunta**'}]);
+
             // Se não tiver próxima pergunta então quizz foi finalizado.
             // Ou se ninguém responder nenhuma alternativa.
             if (!perguntas[0] || collected.size === 0) {
@@ -99,7 +107,7 @@ const handleQuizz = (msg, bot, perguntas, num_perguntas, alternativas, pContador
                 : defaultEmbeder.sendEmbed(msg, 'CORRECT', 'Quizz Finalizado', [
                     { name:'\u200B', value: '✅ Todas as Perguntas foram resolvidas. ✅'}]);
 
-                bot.quizz[msg.guild.id] = false; // Setando quizz como false possibilitando o início de outro quizz.
+                bot.quizz[msg.channel.id] = false; // Setando quizz como false possibilitando o início de outro quizz.
             }
             else
                 handleQuizz(msg, bot, perguntas, num_perguntas, alternativas, ++pContador);
