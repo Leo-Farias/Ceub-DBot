@@ -11,8 +11,11 @@ bot.quizz = {};
 // Obtendo demais recursos do projeto.
 const cm = require('./src/js/comandos.js');
 const { genLetterAsEmoji } = require('./src/utils/emoji-letters.js');
+const { sendEmbed } = require('./src/utils/default-embeder');
 const PongController = require('./src/controllers/pong.controller.js');
 const QuizzController = require('./src/controllers/quizz.controller.js');
+const LivroController = require('./src/controllers/livro.controller.js');
+const livro = require('./src/assets/livro.json');
 
 bot.on('ready', () => {
 	console.log("=== BOT INICIADO ===");
@@ -38,6 +41,37 @@ bot.on('message', msg => { // Evento dispara sempre que alguém manda uma mensag
                 PongController.ping(msg);
 
                 break;
+            case 'livro':
+                LivroController.sendLivro(msg, livro);
+
+                break;
+            case 'ler':
+                const topicosValidos = [
+                    'var', 'variavel', 'variável',
+                    'func', 'funcao', 'funçao', 'função',
+                    'obj', 'objeto'
+                ];
+
+                if (!args[1]) 
+                    sendEmbed(msg, 'ERROR', 'Campo Faltando', [
+                        { name:'\u200B', value: '**Você precisa informar o campo de leitura.\n`!ler {topico}`**'}]);
+
+                else if (!topicosValidos.includes(args[1])) 
+                    sendEmbed(msg, 'ERROR', 'Campo Faltando', [
+                        { name:'\u200B', value: '**Não foi possível encontrar esse tópico.\nUtilize o comando `!livro` para ver a lista de tópicos**'}]);
+
+                else {
+                    let topico = args[1].replace(/variavel|variável+/g, 'var')
+                    .replace(/funcao|funçao|função+/g, 'func')
+                    .replace(/objeto+/g, 'obj');
+
+                    let paginaIndex = 1; // ESSE VALOR VIRIA DO BANCO DIZENDO QUAL FOI A ÚLTIMA PÁGINA ACESSADA.
+                    let paginas = livro[topico].pages;
+                    LivroController.sendPagina(msg, paginas, paginaIndex);
+                }
+                
+
+                break;
             case 'quizz':
                 if (!bot.quizz[msg.channel.id]) {
                     bot.quizz[msg.channel.id] = true; // Setando quest como true.
@@ -50,8 +84,6 @@ bot.on('message', msg => { // Evento dispara sempre que alguém manda uma mensag
                 }
                 else 
                     msg.channel.send(`Já existe um quizz ocorrendo neste momento.`);
-                
-                
                 break;
         }
     }

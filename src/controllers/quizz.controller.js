@@ -1,7 +1,6 @@
 const perguntas = require('../assets/perguntas.json');
 const { MessageAttachment } = require('discord.js');
 const { shuffle } = require('../utils/array-handler.js');
-const defaultEmbeder = require('../utils/default-embeder');
 const { sendEmbed } = require('../utils/default-embeder');
 
 /**
@@ -94,8 +93,8 @@ const handleQuizz = (msg, bot, perguntas, num_perguntas, alternativas, pContador
                 defaultEmbeder.sendEmbed(msg, 'CORRECT', 'Tempo Esgotado', 
                     [{ name:'\u200B', value: 'Vencedores: \n' + vencedores.map( (v, index) => index <= 2 ? `${medalhas[index]} <@${v}>` : `${index + 1}° <@${v}>`).join('\n') }]);
             else
-            defaultEmbeder.sendEmbed(msg, 'ERROR', 'Tempo Esgotado', [
-                { name:'\u200B', value: '**Ninguém acertou a pergunta**'}]);
+                defaultEmbeder.sendEmbed(msg, 'ERROR', 'Tempo Esgotado', [
+                    { name:'\u200B', value: '**Ninguém acertou a pergunta**'}]);
 
             // Se não tiver próxima pergunta então quizz foi finalizado.
             // Ou se ninguém responder nenhuma alternativa.
