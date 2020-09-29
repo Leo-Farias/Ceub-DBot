@@ -11,17 +11,13 @@ console.log("\n\n\n\n\n\n\nENV:" ,ENV, "\nPREFIX:", PREFIX)
 
 // Obtendo demais recursos do projeto.
 const cm = require('./src/js/comandos.js');
-const CommandController = require('./src/controllers/command.controller.js')
-bot.quizz = {};
-
-// Obtendo demais recursos do projeto.
-const cm = require('./src/js/comandos.js');
 const { genLetterAsEmoji } = require('./src/utils/emoji-letters.js');
 const { sendEmbed } = require('./src/utils/default-embeder');
-const PongController = require('./src/controllers/pong.controller.js');
+const CommandController = require('./src/controllers/command.controller.js');
 const QuizzController = require('./src/controllers/quizz.controller.js');
 const LivroController = require('./src/controllers/livro.controller.js');
 const livro = require('./src/assets/livro.json');
+bot.quizz = {};
 
 bot.on('ready', () => {
 	console.log("=== BOT INICIADO ===");
@@ -40,13 +36,6 @@ bot.on('message', msg => { // Evento dispara sempre que alguém manda uma mensag
         
 		switch(args[0].toLowerCase()) {
 			// COMANDOS PARA EXECUTAR:
-			case 'ping': // Nome do comando;
-                // Para interagir com o usuário utilizamos o objeto msg, que é gerado pelo evento. Este objeto 
-                // Permite que a gente mande mensagens, pegue as informações do autor da mensagem, mandar uma mensagem
-                // no canal em que o autor enviou o comando, entre outros.
-                PongController.ping(msg);
-
-                break;
             case 'livro':
                 LivroController.sendLivro(msg, livro);
 
