@@ -1,0 +1,131 @@
+{
+    "var": {
+        "nome": "Variável",
+        "page_max": 4,
+        "pages": [
+            {
+                "color": "0x00ff00",
+                "author": {
+                    "name": "Estudo de Variáveis - Pg 1 de 4"
+                },
+                "fields": [
+                    { "name": "Tópico", "value": "Valor do Campo" }
+                ],
+                "footer": {
+                    "text": "Mensagem no fim da página"
+                }
+            },
+            {
+                "color": "0x00ff00",
+                "author": {
+                    "name": "Estudo de Variáveis - Pg 2 de 4"
+                },
+                "fields": [
+                    { "name": "\u200B", "value": "Valor do Campo com tópico vazio `(O mesmo vale para o campo value)`" }
+                ],
+                "footer": {
+                    "text": "Mensagem no fim da página"
+                }
+            },
+            {
+                "color": "0x00ff00",
+                "author": {
+                    "name": "Estudo de Variáveis - Pg 3 de 4"
+                },
+                "fields": [
+                    { "name": "Listagem sem criar vários Tópicos", "value": "🍑Pêssego\n🍎Maçã\n🍈Melância\n🍍Abacaxi" }
+                ],
+                "footer": {
+                    "text": "Mensagem no fim da página"
+                }
+            },
+            {
+                "color": "0x00ff00",
+                "author": {
+                    "name": "Estudo de Variáveis - Pg 4 de 4"
+                },
+                "fields": [
+                    { "name": "Tópico #1", "value": "Valor do Campo #1" },
+                    { "name": "Tópico #2", "value": "Valor do Campo #2" },
+                    { "name": "Tópico #3", "value": "Valor do Campo #3" },
+                    { "name": "Tópico #4", "value": "Valor do Campo #4" }
+                ],
+                "footer": {
+                    "text": "Mensagem no fim da página"
+                }
+            }
+        ]
+    },
+    "func": {
+        "nome": "Funções",
+        "page_max": 2,
+        "pages": [
+            {
+                "color": "0x00ff00",
+                "author": {
+                    "name": "Estudo de Funções - Pg 1 de 2"
+                },
+                "fields": [
+                    { "name": "Tópico", "value": "Valor do Campo" }
+                ],
+                "footer": {
+                    "text": "Mensagem no fim da página"
+                }
+            },
+            {
+                "color": "0x00ff00",
+                "author": {
+                    "name": "Estudo de Funções - Pg 2 de 2"
+                },
+                "fields": [
+                    { "name": "\u200B", "value": "Valor do Campo com tópico vazio `(O mesmo vale para o campo value)`" }
+                ],
+                "footer": {
+                    "text": "Mensagem no fim da página"
+                }
+            }
+        ]
+    },
+    "obj": {
+        "nome": "Objetos",
+        "page_max": 3,
+        "pages": [
+            {
+                "color": "0x00ff00",
+                "author": {
+                    "name": "Estudo de Objetos - Pg 1 de 3"
+                },
+                "fields": [
+                    { "name": "Tópico", "value": "Valor do Campo" }
+                ],
+                "footer": {
+                    "text": "Mensagem no fim da página"
+                }
+            },
+            {
+                "color": "0x00ff00",
+                "author": {
+                    "name": "Estudo de Objetos - Pg 2 de 3"
+                },
+                "fields": [
+                    { "name": "\u200B", "value": "Valor do Campo com tópico vazio `(O mesmo vale para o campo value)`" }
+                ],
+                "footer": {
+                    "text": "Mensagem no fim da página"
+                }
+            },
+            {
+                "color": "0x00ff00",
+                "author": {
+                    "name": "Estudo de Objetos - Pg 3 de 3"
+                },
+                "fields": [
+                    { "name": "Listagem sem criar vários Tópicos", "value": "🍑Pêssego\n\n🍎Maçã\n\n🍈Melância\n\n🍍Abacaxi" }
+                ],
+                "footer": {
+                    "text": "Mensagem no fim da página"
+                }
+            }
+        ]
+    }
+}
