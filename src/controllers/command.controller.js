@@ -1,5 +1,6 @@
 const contentParser = require('../utils/command-parser')
 const runCode = require('../utils/code-runner')
+const codeExtractor = require('../utils/code-extractor')
 
 function runCommand(msg){
     const userCommand = contentParser(msg.content)
@@ -11,10 +12,12 @@ function runCommand(msg){
     ESTRUTURA_COMANDO: ${contentParser(msg.content, 'List')}
     `)
     
-    runCode(userCommand.parameter)
+    const code = codeExtractor(userCommand.parameter)
+
+    runCode(code)
         .then((result) => {
             console.log("Result:", result)
-            return msg.channel.send(result)
+            return msg.channel.send(`OUTPUT: \n\`\`\`\n${result}\n\`\`\``)
         })
         .catch((e) => {
             console.log(e)
