@@ -90,10 +90,10 @@ const handleQuizz = (msg, bot, perguntas, num_perguntas, alternativas, pContador
 
             
             if (vencedores.length > 0)
-                defaultEmbeder.sendEmbed(msg, 'CORRECT', 'Tempo Esgotado', 
+                sendEmbed(msg, 'CORRECT', 'Tempo Esgotado', 
                     [{ name:'\u200B', value: 'Vencedores: \n' + vencedores.map( (v, index) => index <= 2 ? `${medalhas[index]} <@${v}>` : `${index + 1}° <@${v}>`).join('\n') }]);
             else
-                defaultEmbeder.sendEmbed(msg, 'ERROR', 'Tempo Esgotado', [
+                sendEmbed(msg, 'ERROR', 'Tempo Esgotado', [
                     { name:'\u200B', value: '**Ninguém acertou a pergunta**'}]);
 
             // Se não tiver próxima pergunta então quizz foi finalizado.
@@ -101,9 +101,9 @@ const handleQuizz = (msg, bot, perguntas, num_perguntas, alternativas, pContador
             if (!perguntas[0] || collected.size === 0) {
                 
                 collected.size === 0
-                ? defaultEmbeder.sendEmbed(msg, 'ERROR', 'Quizz Finalizado', [
+                ? sendEmbed(msg, 'ERROR', 'Quizz Finalizado', [
                     { name:'\u200B', value: '⏲️ **Inatividade** ⏲️'}])
-                : defaultEmbeder.sendEmbed(msg, 'CORRECT', 'Quizz Finalizado', [
+                : sendEmbed(msg, 'CORRECT', 'Quizz Finalizado', [
                     { name:'\u200B', value: '✅ Todas as Perguntas foram resolvidas. ✅'}]);
 
                 bot.quizz[msg.channel.id] = false; // Setando quizz como false possibilitando o início de outro quizz.

@@ -41,25 +41,26 @@ bot.on('message', msg => { // Evento dispara sempre que alguém manda uma mensag
 
                 break;
             case 'ler':
-                const topicosValidos = [
-                    'var', 'variavel', 'variável',
-                    'func', 'funcao', 'funçao', 'função',
-                    'obj', 'objeto'
-                ];
-
-                if (!args[1]) 
+                if (!args[1]) {
                     sendEmbed(msg, 'ERROR', 'Campo Faltando', [
                         { name:'\u200B', value: '**Você precisa informar o campo de leitura.\n`!ler {topico}`**'}]);
+                    break;
+                }
+                // OBTENDO TOPICOS VALIDOS PADRÃO.
+                let topicosValidos = [];
+                for (let topico in livro)
+                    topicosValidos.push(topico);
 
-                else if (!topicosValidos.includes(args[1])) 
+                // PODEMOS FAZER O REPLACE PARA ACEITAR VALORES ALÉM DAS CHAVES DO OBJETO LIVRO
+                let topico = args[1].toLowerCase().replace(/variavel|variável+/g, 'var')
+                    .replace(/funcao|funçao|função+/g, 'func')
+                    .replace(/objeto+/g, 'obj');
+                
+                if (!topicosValidos.includes(topico)) 
                     sendEmbed(msg, 'ERROR', 'Campo Faltando', [
                         { name:'\u200B', value: '**Não foi possível encontrar esse tópico.\nUtilize o comando `!livro` para ver a lista de tópicos**'}]);
 
                 else {
-                    let topico = args[1].replace(/variavel|variável+/g, 'var')
-                    .replace(/funcao|funçao|função+/g, 'func')
-                    .replace(/objeto+/g, 'obj');
-
                     let paginaIndex = 1; // ESSE VALOR VIRIA DO BANCO DIZENDO QUAL FOI A ÚLTIMA PÁGINA ACESSADA.
                     let paginas = livro[topico].pages;
                     LivroController.sendPagina(msg, paginas, paginaIndex);
