@@ -11,10 +11,11 @@ const ENV = process.env.ENV
 // Obtendo demais recursos do projeto.
 const cm = require('./src/js/comandos.js');
 const CommandController = require('./src/controllers/command.controller.js')
+const commandParser = require('./src/utils/commandParser')
 
 bot.on('ready', () => {
     console.log("=== BOT INICIADO ===");
-    console.log("\n\n\n\n\n\n\nENV:" ,ENV, "\nPREFIX:", PREFIX)
+    console.log("ENV:" ,ENV, "\nPREFIX:", PREFIX, "\n\n\n")
 });
 
 
@@ -27,8 +28,8 @@ bot.on('message', msg => { // Evento dispara sempre que alguém manda uma mensag
     // Separação de argumentos para comandos com mais opções. $escolher 1 => args[0] escolher, args[1] => 1
     let args = msg.content.substring(PREFIX.length).split(" ");
         
-    
-    switch(args[0].toLowerCase()) {
+
+    switch(true) {
         // COMANDOS PARA EXECUTAR:
         case 'ping': // Nome do comando;
             // Para interagir com o usuário utilizamos o objeto msg, que é gerado pelo evento. Este objeto 
@@ -49,7 +50,11 @@ bot.on('message', msg => { // Evento dispara sempre que alguém manda uma mensag
                 msg.channel.send(rs.erro);
             
             break;
-        case 'run': CommandController.runCommand(msg)
+        case /^\$code/.test(msg.content): CommandController.runCommand(msg)
+            break;
+        default:
+            console.log("NO OPTION FOR: '" + msg.content + "'")
+            break;
     }
 });
 

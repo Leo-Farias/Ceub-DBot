@@ -7,16 +7,20 @@ const runCode = (code, interpreter = 'python') => {
     const filePath = path.resolve(__dirname, '..', 'tmp')
     const fileFullPath = filePath + '/' + fileName
 
-
+    const encondedCode = "# -*- coding: utf-8 -*-\n" + code
     return new Promise((resolve, reject) => {
-        fs.writeFile(fileFullPath, code, (err) => {
+        fs.writeFile(fileFullPath, encondedCode, (err) => {
             if (err) throw err
             const command = `${interpreter} ${fileFullPath}`
-            console.log('COMMAND:', command)
-            const commandReturn = shell.exec(command)
-            console.log('SAIDA SHELL:', commandReturn.stdout || commandReturn.stderr)
+            //console.log('COMMAND:', command)
+            try {
+                const commandReturn = shell.exec(command)
+                //console.log('SAIDA SHELL:', commandReturn.stdout || commandReturn.stderr)
+                resolve(commandReturn.stdout || commandReturn.stderr)
+            } catch (err) {
+                //console.log("Error ao rodar o comando")
+            }
             fs.unlink(fileFullPath, (err) => {if (err) throw err})
-            resolve(commandReturn.stdout || commandReturn.stderr)
         })
     })
     

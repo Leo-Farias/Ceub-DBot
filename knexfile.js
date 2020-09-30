@@ -1,16 +1,15 @@
 require('dotenv').config()
 const path = require('path')
-console.log(process.env.DB_HOST)
 
 module.exports = {
     development: {
         client: 'mysql',
         version: '5.7',
         connection: {
-            host: process.env.DB_HOST,
-            user: process.env.DB_USER,
-            password: process.env.DB_PASSWORD,
-            database: process.env.DB_NAME,
+            host: process.env.DB_HOST || 'localhost',
+            user: process.env.DB_USER || 'root',
+            password: process.env.DB_PASSWORD || 'uniceub',
+            database: process.env.DB_NAME || 'dev',
         },
         migrations: {
             tableName: 'knex_migrations',
