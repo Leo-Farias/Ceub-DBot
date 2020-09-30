@@ -28,8 +28,8 @@ bot.on('message', msg => { // Evento dispara sempre que alguém manda uma mensag
     // Separação de argumentos para comandos com mais opções. $escolher 1 => args[0] escolher, args[1] => 1
     let args = msg.content.substring(PREFIX.length).split(" ");
         
-
-    switch(true) {
+    console.log(args[0].toLowerCase())
+    switch(args[0].toLowerCase()) {
         // COMANDOS PARA EXECUTAR:
         case 'ping': // Nome do comando;
             // Para interagir com o usuário utilizamos o objeto msg, que é gerado pelo evento. Este objeto 
@@ -50,7 +50,7 @@ bot.on('message', msg => { // Evento dispara sempre que alguém manda uma mensag
                 msg.channel.send(rs.erro);
             
             break;
-        case /^\$code/.test(msg.content): CommandController.runCommand(msg)
+        case 'code': CommandController.runCommand(msg)
             break;
         default:
             console.log("NO OPTION FOR: '" + msg.content + "'")
