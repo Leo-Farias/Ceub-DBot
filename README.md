@@ -22,13 +22,13 @@ Para fins didaticos o PREFIXO do Bot sera considerado "!"
 * `!interpretadores`
 * ``!code run `print('Hello World')` ``
 *
-````
-!code run
-```
-text = 'Hello World'
-print(text)
-```
-````
+    ````
+    !code run
+    ```
+    text = 'Hello World'
+    print(text)
+    ```
+    ````
 ## Desafios
 
 ## Duelo
