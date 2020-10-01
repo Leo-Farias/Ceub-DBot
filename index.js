@@ -41,58 +41,58 @@ bot.on('message', msg => { // Evento dispara sempre que alguém manda uma mensag
     let args = msg.content.substring(PREFIX.length).split(" ");
         
 		switch(args[0].toLowerCase()) {
-            case 'ping': // Nome do comando;
-                // Para interagir com o usuário utilizamos o objeto msg, que é gerado pelo evento. Este objeto 
-                // Permite que a gente mande mensagens, pegue as informações do autor da mensagem, mandar uma mensagem
-                // no canal em que o autor enviou o comando, entre outros.
-                msg.channel.send("Pong");
+          case 'ping': // Nome do comando;
+              // Para interagir com o usuário utilizamos o objeto msg, que é gerado pelo evento. Este objeto 
+              // Permite que a gente mande mensagens, pegue as informações do autor da mensagem, mandar uma mensagem
+              // no canal em que o autor enviou o comando, entre outros.
+              msg.channel.send("Pong");
 			// COMANDOS PARA EXECUTAR:
-            case 'livro':
-                LivroController.sendLivro(msg, livro);
+          case 'livro':
+              LivroController.sendLivro(msg, livro);
 
-                break;
-            case 'ler':
-                if (!args[1]) {
-                    sendEmbed(msg, 'ERROR', 'Campo Faltando', [
-                        { name:'\u200B', value: '**Você precisa informar o campo de leitura.\n`!ler {topico}`**'}]);
-                    break;
-                }
-                // OBTENDO TOPICOS VALIDOS PADRÃO.
-                let topicosValidos = [];
-                for (let topico in livro)
-                    topicosValidos.push(topico);
+              break;
+          case 'ler':
+              if (!args[1]) {
+                  sendEmbed(msg, 'ERROR', 'Campo Faltando', [
+                      { name:'\u200B', value: '**Você precisa informar o campo de leitura.\n`!ler {topico}`**'}]);
+                  break;
+              }
+              // OBTENDO TOPICOS VALIDOS PADRÃO.
+              let topicosValidos = [];
+              for (let topico in livro)
+                  topicosValidos.push(topico);
 
-                // PODEMOS FAZER O REPLACE PARA ACEITAR VALORES ALÉM DAS CHAVES DO OBJETO LIVRO
-                let topico = args[1].toLowerCase().replace(/variavel|variável+/g, 'var')
-                    .replace(/funcao|funçao|função+/g, 'func')
-                    .replace(/objeto+/g, 'obj');
+              // PODEMOS FAZER O REPLACE PARA ACEITAR VALORES ALÉM DAS CHAVES DO OBJETO LIVRO
+              let topico = args[1].toLowerCase().replace(/variavel|variável+/g, 'var')
+                  .replace(/funcao|funçao|função+/g, 'func')
+                  .replace(/objeto+/g, 'obj');
 
-                if (!topicosValidos.includes(topico)) 
-                    sendEmbed(msg, 'ERROR', 'Campo Faltando', [
-                        { name:'\u200B', value: '**Não foi possível encontrar esse tópico.\nUtilize o comando `!livro` para ver a lista de tópicos**'}]);
+              if (!topicosValidos.includes(topico)) 
+                  sendEmbed(msg, 'ERROR', 'Campo Faltando', [
+                      { name:'\u200B', value: '**Não foi possível encontrar esse tópico.\nUtilize o comando `!livro` para ver a lista de tópicos**'}]);
 
-                else {
-                    let paginaIndex = 1; // ESSE VALOR VIRIA DO BANCO DIZENDO QUAL FOI A ÚLTIMA PÁGINA ACESSADA.
-                    let paginas = livro[topico].pages;
-                    LivroController.sendPagina(msg, paginas, paginaIndex);
-                }
+              else {
+                  let paginaIndex = 1; // ESSE VALOR VIRIA DO BANCO DIZENDO QUAL FOI A ÚLTIMA PÁGINA ACESSADA.
+                  let paginas = livro[topico].pages;
+                  LivroController.sendPagina(msg, paginas, paginaIndex);
+              }
 
-                break;
-            case 'quizz':
-                if (!bot.quizz[msg.channel.id]) {
-                    bot.quizz[msg.channel.id] = true; // Setando quest como true.
+              break;
+          case 'quizz':
+              if (!bot.quizz[msg.channel.id]) {
+                  bot.quizz[msg.channel.id] = true; // Setando quest como true.
 
-                    let perguntas = QuizzController.obterPerguntas();
-                    const ALTERNATIVAS = [ genLetterAsEmoji('a'), genLetterAsEmoji('b'), genLetterAsEmoji('c'), genLetterAsEmoji('d')];
-                    let pContador = 0;
+                  let perguntas = QuizzController.obterPerguntas();
+                  const ALTERNATIVAS = [ genLetterAsEmoji('a'), genLetterAsEmoji('b'), genLetterAsEmoji('c'), genLetterAsEmoji('d')];
+                  let pContador = 0;
 
-                    QuizzController.handleQuizz(msg, bot, perguntas, perguntas.length, ALTERNATIVAS, pContador);
-                }
-                else 
-                    msg.channel.send(`Já existe um quizz ocorrendo neste momento.`);
-                break;
-            case 'code': CommandController.runCommand(msg)
-                break;
+                  QuizzController.handleQuizz(msg, bot, perguntas, perguntas.length, ALTERNATIVAS, pContador);
+              }
+              else 
+                  msg.channel.send(`Já existe um quizz ocorrendo neste momento.`);
+              break;
+          case 'code': CommandController.runCommand(msg)
+              break;
             default:
                 console.log("NO OPTION FOR: '" + msg.content + "'")
                 break;
