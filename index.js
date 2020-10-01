@@ -41,6 +41,11 @@ bot.on('message', msg => { // Evento dispara sempre que alguém manda uma mensag
     let args = msg.content.substring(PREFIX.length).split(" ");
         
 		switch(args[0].toLowerCase()) {
+            case 'ping': // Nome do comando;
+                // Para interagir com o usuário utilizamos o objeto msg, que é gerado pelo evento. Este objeto 
+                // Permite que a gente mande mensagens, pegue as informações do autor da mensagem, mandar uma mensagem
+                // no canal em que o autor enviou o comando, entre outros.
+                msg.channel.send("Pong");
 			// COMANDOS PARA EXECUTAR:
             case 'livro':
                 LivroController.sendLivro(msg, livro);
@@ -86,7 +91,7 @@ bot.on('message', msg => { // Evento dispara sempre que alguém manda uma mensag
                 else 
                     msg.channel.send(`Já existe um quizz ocorrendo neste momento.`);
                 break;
-            case 'run': CommandController.runCommand(msg)
+            case 'code': CommandController.runCommand(msg)
                 break;
             default:
                 console.log("NO OPTION FOR: '" + msg.content + "'")
