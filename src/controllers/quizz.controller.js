@@ -9,12 +9,12 @@ const { sendEmbed } = require('../utils/default-embeder');
  * perguntas repitidas.
  * @return {Array} retorna array de perguntas {Object}.
 */
-const obterPerguntas = () => {
+const obterPerguntas = (qtd_perguntas = 5) => {
     let perguntasIds = Object.keys(perguntas);
     let todasPerguntas = [];
     shuffle(perguntasIds);
 
-    for (let i = 0; i < perguntasIds.length; i++) todasPerguntas.push(perguntas[perguntasIds[i]]);
+    for (let i = 0; i < qtd_perguntas; i++) todasPerguntas.push(perguntas[perguntasIds[i]]);
     
     return todasPerguntas;
 }
@@ -57,6 +57,7 @@ const handleQuizz = (msg, bot, perguntas, num_perguntas, alternativas, pContador
     const file = new MessageAttachment('./src/assets/easy_3.png'); // TODO PEGAR VALOR A PARTIR DE UM VALOR DA PERGUNTA
     const medalhas = ['🥇', '🥈', '🥉'];
     const tempo_pergunta = perguntas[0].time;
+    const ponto_total = perguntas[0].pontos;
     let [embed, alt_correta] = handlePergunta(perguntas[0], pContador+1, num_perguntas, tempo_pergunta);
     let participantes = [];
     let vencedores = [];
@@ -78,7 +79,22 @@ const handleQuizz = (msg, bot, perguntas, num_perguntas, alternativas, pContador
             participantes.push(idParticipante); // Adicionando participante na lista para filtrar
 
             if(r.emoji.name === alternativas[alt_correta]) {
-                vencedores.push(idParticipante);
+                let pontos = 0;
+                switch (vencedores.length) {
+                    case 0: // 1° Lugar
+                        pontos = ponto_total;
+                        break;
+                    case 1: // 2° Lugar
+                        pontos = Math.round(ponto_total * 0.85);
+                        break;
+                    case 2: // 3° Lugar
+                        pontos = Math.round(ponto_total * 0.75);
+                        break;
+                    default: // Demais posições
+                        pontos = Math.round(ponto_total * 0.65);
+                        break;
+                }
+                vencedores.push({ id: idParticipante, pontos: pontos });
             }
         })
 
@@ -89,28 +105,41 @@ const handleQuizz = (msg, bot, perguntas, num_perguntas, alternativas, pContador
             perguntas.splice(0, 1);
 
             
-            if (vencedores.length > 0)
+            if (vencedores.length > 0) 
                 sendEmbed(msg, 'CORRECT', 'Tempo Esgotado', 
-                    [{ name:'\u200B', value: 'Vencedores: \n' + vencedores.map( (v, index) => index <= 2 ? `${medalhas[index]} <@${v}>` : `${index + 1}° <@${v}>`).join('\n') }]);
+                    [
+                        { name: 'Vencedores', value: vencedores.map( (v, index) => index <= 2 ? `${medalhas[index]} <@${v.id}>` : `${index + 1}° <@${v.id}>`).join('\n'), inline: true },
+                        { name: 'Pontuação', value: vencedores.map( v => v.pontos ).join('\n'), inline: true }
+                    ]);
             else
                 sendEmbed(msg, 'ERROR', 'Tempo Esgotado', [
-                    { name:'\u200B', value: '**Ninguém acertou a pergunta**'}]);
-
-            // Se não tiver próxima pergunta então quizz foi finalizado.
-            // Ou se ninguém responder nenhuma alternativa.
-            if (!perguntas[0] || collected.size === 0) {
-                
-                collected.size === 0
-                ? sendEmbed(msg, 'ERROR', 'Quizz Finalizado', [
-                    { name:'\u200B', value: '⏲️ **Inatividade** ⏲️'}])
-                : sendEmbed(msg, 'CORRECT', 'Quizz Finalizado', [
-                    { name:'\u200B', value: '✅ Todas as Perguntas foram resolvidas. ✅'}]);
-
-                bot.quizz[msg.channel.id] = false; // Setando quizz como false possibilitando o início de outro quizz.
-            }
-            else
-                handleQuizz(msg, bot, perguntas, num_perguntas, alternativas, ++pContador);
+                    { name: '\u200B', value: '**Ninguém acertou a pergunta**' }]);
             
+            
+            sendEmbed(msg, 'LOAD', 'Processando Informações', [
+                { name: '\u200B', value: vencedores.length > 0 
+                ? 'Parabéns à todos que acertaram! Vocês podem buscar esclarecimentos no tópico x do livro.' 
+                : 'Droga! Parece que vocês não conseguiram quebrar essa barreira...\n' + 
+                'Mas não se desanimem! \n\n🌐 **Eu fiz uma análise rápida da pergunta...** 🌐\n\n 📄 Os dados indicam que essa era uma pergunta do tipo **x**! 📄 \n\nTenho certeza que vocês poderão responder corretamente se melhorarem seus conhecimentos.' },
+                { name: '\u200B', value: !perguntas[0] || collected.size === 0 ? 'Gerando arquivos finais...' : 'Retomando processo de quebra de barreiras... Carregando próxima pergunta.' }
+            ]);
+
+            // Espera X segundos até carregar outra pergunta
+            setTimeout(function() {
+                // Se não tiver próxima pergunta então quizz foi finalizado.
+                // Ou se ninguém responder nenhuma alternativa.
+                if (!perguntas[0] || collected.size === 0) {
+                    collected.size === 0
+                    ? sendEmbed(msg, 'ERROR', 'Quizz Finalizado', [
+                        { name:'\u200B', value: '⏲️ **Inatividade** ⏲️'}])
+                    : sendEmbed(msg, 'CORRECT', 'Quizz Finalizado', [
+                        { name:'\u200B', value: '✅ Todas as Perguntas foram resolvidas. ✅'}]);
+    
+                    bot.quizz[msg.channel.id] = false; // Setando quizz como false possibilitando o início de outro quizz.
+                }
+                else
+                    handleQuizz(msg, bot, perguntas, num_perguntas, alternativas, ++pContador);
+            }, 5000);
         });
     });
 }

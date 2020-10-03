@@ -3,13 +3,15 @@
         "label": "Em python se quisermos acessar o último valor de uma lista ls, utilizamos o comando:",
         "alternativas": ["ls[ls+1]", "ls[ls-1]", "ls[0]", "ls[len(ls)]", "ls[len(ls)+1]"],
         "alternativaCorreta": "ls[-1]",
+        "pontos": 40,
         "time": 25000
     },
     "1": {
         "label": "Qual é o resultado printado do seguinte código em python?\n`print(14//4, 14%4, 12.0/4)`",
         "alternativas": ["3.5 2.0 3.0", "4 2 3", "3 2,0 3,0", "3.5 2 3", "14//4, 14%4, 12.0/4"],
         "alternativaCorreta": "3 2 3.0",
-        "time": 20000
+        "pontos": 25,
+        "time": 25000
     },
     "2": {
         "label": "Qual é a principal diferença entre os tipos de dado Lista e Tupla em python?",
@@ -19,7 +21,8 @@
         "Tuplas precisam de uma chave para cada um de seus valores, enquanto os valores das listas só são acessados através da posição",
         "Listas não podem ter outras listas como um de seus valores, já as tuplas podem ter listas e outras tuplas como seus valores"],
         "alternativaCorreta": "Tuplas são imutáveis e Listas são mutáveis",
-        "time": 40000
+        "pontos": 40,
+        "time": 25000
     },
     "3": {
         "label": "Qual a alternativa correta que retornaria o valor 4, dentro dessa lista?\n`ls = [0, 1, {\"Cachorro\": [2, (3, {\"Gato\": 4}), 5]}, 6]`",
@@ -29,6 +32,52 @@
             "ls[2][\"Gato\"][0][0][\"Tartaruga\"]",
             "ls[2][\"Cachorro\"][1][0][1][\"Gato\"]"],
         "alternativaCorreta": "ls[2][\"Cachorro\"][1][1][\"Gato\"]",
-        "time": 35000
+        "pontos": 80,
+        "time": 25000
+    },
+    "4": {
+        "label": "Levando em consideração a biblioteca sys, qual comando retorna a versão do python utilizada pelo programa?",
+        "alternativas": ["print(sys())", 
+            "print(sys.get_version())", 
+            "sys.print.version()",
+            "print(sys.python.version())",
+            "print(sys)"],
+        "alternativaCorreta": "print(sys.version)",
+        "pontos": 30,
+        "time": 25000
+    },
+    "5": {
+        "label": "Qual comando exibiria a data atual no formato Ano-Mês-Dia, leve em consideração este código: \n\nimport datetime\nnow = datetime.datetime.now()\nprint('Data Atual: ')",
+        "alternativas": ["print(now)", 
+            "print(now.format('Year', 'Month', 'Day')", 
+            "print(now.formatDate('Year', 'Month', 'Day')",
+            "print(now.strftime('Year-Month-Day')",
+            "print(now('Y-m-d')"],
+        "alternativaCorreta": "print(now.strftime('%Y-%m-%d'))",
+        "pontos": 80,
+        "time": 25000
+    },
+    "6": {
+        "label": "Qual a saída do seguinte código: \n\nvalorUm = 5 ** 2\nvalorDois = 5 * 3\nprint(ValorUm)\nprint(ValorDois)",
+        "alternativas": ["\n7\n8", 
+            "\n10\n15", 
+            "Error: Invalid Syntax",
+            "\n52\n15",
+            "\n25\n8"],
+        "alternativaCorreta": "\n25\n15",
+        "pontos": 20,
+        "time": 25000
+    },
+    "7": {
+        "label": "O que é exibido na tela quando este código é executado? \n\nnome = 'Roberto Carlos'\nprint(nome[2::-1])",
+        "alternativas": ["solraC otreboR", 
+            "sla teo", 
+            "Error: Invalid Syntax",
+            "r",
+            "reb",
+            "solraC"],
+        "alternativaCorreta": "boR",
+        "pontos": 50,
+        "time": 25000
     }
 }

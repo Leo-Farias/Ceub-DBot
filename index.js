@@ -4,10 +4,10 @@ const Discord = require('discord.js');
 const bot = new Discord.Client();
 
 // Configurações base <.env>
-const token = process.env.API_TOKEN
-const PREFIX = process.env.PREFIX
-const ENV = process.env.ENV
-console.log("\n\n\n\n\n\n\nENV:" ,ENV, "\nPREFIX:", PREFIX)
+const token = process.env.API_TOKEN;
+const PREFIX = process.env.PREFIX;
+const ENV = process.env.ENV;
+console.log("ENV:" , ENV, " || PREFIX:", PREFIX);
 
 // Obtendo demais recursos do projeto.
 const cm = require('./src/js/comandos.js');
@@ -38,8 +38,8 @@ bot.on('message', msg => { // Evento dispara sempre que alguém manda uma mensag
 			// COMANDOS PARA EXECUTAR:
             case 'livro':
                 LivroController.sendLivro(msg, livro);
-
                 break;
+
             case 'ler':
                 if (!args[1]) {
                     sendEmbed(msg, 'ERROR', 'Campo Faltando', [
@@ -65,8 +65,8 @@ bot.on('message', msg => { // Evento dispara sempre que alguém manda uma mensag
                     let paginas = livro[topico].pages;
                     LivroController.sendPagina(msg, paginas, paginaIndex);
                 }
-                
                 break;
+
             case 'quizz':
                 if (!bot.quizz[msg.channel.id]) {
                     bot.quizz[msg.channel.id] = true; // Setando quest como true.
@@ -80,7 +80,10 @@ bot.on('message', msg => { // Evento dispara sempre que alguém manda uma mensag
                 else 
                     msg.channel.send(`Já existe um quizz ocorrendo neste momento.`);
                 break;
-                case 'run': CommandController.runCommand(msg)
+
+                case 'run': 
+                    CommandController.runCommand(msg); 
+                break;
         }
     }
 });
