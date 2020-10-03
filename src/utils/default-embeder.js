@@ -5,6 +5,10 @@ const sendEmbed = (msg, type, title, fields) => {
     let hex_color = 0x000000;
 
     switch(type) {
+        case 'LOAD':
+            file_path = './src/assets/load.png';
+            hex_color = 0x33ffe3;
+            break;
         case 'ERROR':
             file_path = './src/assets/error.png';
             hex_color = 0xad0000;
