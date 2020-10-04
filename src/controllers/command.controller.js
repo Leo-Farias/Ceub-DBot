@@ -17,7 +17,7 @@ function runCommand(msg){
     logInfo(msg)
     console.log(userCommand.parameter)
 
-    const code = codeExtractor(userCommand.code)
+    const code = codeExtractor(msg)
     runCode(code)
         .then((result) => {
             console.log("Result:", result)
@@ -25,7 +25,7 @@ function runCommand(msg){
         })
         .catch((e) => {
             console.log(e)
-            return msg.channel.send("Erro inesperado")
+            return msg.channel.send(e)
         })
 }
 

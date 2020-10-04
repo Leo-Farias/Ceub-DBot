@@ -12,7 +12,7 @@ services:
     build: .
     volumes: 
       - .:/opt/
+    working_dir: /opt/Ceub-DBot
     environment:
       ENV: development
-    entrypoint: "npm"
-    command: "run dev"
+    command: "bash -c 'rm -rf node_modules && npm i && npm run dev'"
