@@ -15,10 +15,16 @@ const runCode = (code, interpreter = 'python') => {
             //console.log('COMMAND:', command)
             try {
                 const commandReturn = shell.exec(command)
-                //console.log('SAIDA SHELL:', commandReturn.stdout || commandReturn.stderr)
-                resolve(commandReturn.stdout || commandReturn.stderr)
+                
+                if(commandReturn.stdout) resolve(commandReturn.stdout)
+                else {
+                    const fullCode = `\\\`\\\`\\\`\nprint("Hello World")\n\\\`\\\`\\\``
+                    const lineCode = `\\\`print("Hello World")\\\``
+                    const badFormat = `Codigo mal formatado. Use:\n${lineCode}\nou\n${fullCode}`
+                    reject(badFormat)
+                }
             } catch (err) {
-                //console.log("Error ao rodar o comando")
+                console.log(err)
             }
             fs.unlink(fileFullPath, (err) => {if (err) throw err})
         })

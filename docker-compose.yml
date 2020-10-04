@@ -1,18 +1,12 @@
 version: '3.0'
 services:
-  db:
-    image: mysql:5.7.31
-    ports:
-      - 3306:3306
-    environment:
-      MYSQL_ROOT_PASSWORD: uniceub
-      MYSQL_DATABASE: dev
+
 
   bot:
     build: .
     volumes: 
       - .:/opt/
+    working_dir: /opt/Ceub-DBot
     environment:
       ENV: development
-    entrypoint: "npm"
-    command: "run dev"
+    command: "bash -c 'rm -rf node_modules && npm i && npm run dev'"
