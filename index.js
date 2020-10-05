@@ -10,9 +10,7 @@ const ENV = process.env.ENV
 
 // Obtendo demais recursos do projeto.
 const cm = require('./src/js/comandos.js');
-
-const CommandController = require('./src/controllers/command.controller.js')
-const commandParser = require('./src/utils/commandParser')
+const CommandController = require('./src/controllers/command.controller.js');
 
 const { genLetterAsEmoji } = require('./src/utils/emoji-letters.js');
 const { sendEmbed } = require('./src/utils/default-embeder');
@@ -29,13 +27,15 @@ bot.on('ready', () => {
 
 
 bot.on('message', msg => { // Evento dispara sempre que alguém manda uma mensagem.
+    
     // Filtra mensagens de bot
     if (msg.author.bot) return
-    // Filtra mensagem apenas para aqueles que começam com o prefixo correto
-    if (msg.content.substring(0, PREFIX.length) !== PREFIX) return
-  
+    
+    // GOOFY 
     if (/windows|Windows|WINDOWS/.test(msg.content) && !msg.author.bot) msg.channel.send(`Linux > Windows`);
     
+    // Filtra mensagem apenas para aqueles que começam com o prefixo correto
+    if (msg.content.substring(0, PREFIX.length) !== PREFIX) return
   
     // Separação de argumentos para comandos com mais opções. $escolher 1 => args[0] escolher, args[1] => 1
     let args = msg.content.substring(PREFIX.length).split(" ");
@@ -46,6 +46,7 @@ bot.on('message', msg => { // Evento dispara sempre que alguém manda uma mensag
               // Permite que a gente mande mensagens, pegue as informações do autor da mensagem, mandar uma mensagem
               // no canal em que o autor enviou o comando, entre outros.
               msg.channel.send("Pong");
+
 			// COMANDOS PARA EXECUTAR:
             case 'livro':
                 LivroController.sendLivro(msg, livro);
