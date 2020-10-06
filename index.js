@@ -16,13 +16,15 @@ const { genLetterAsEmoji } = require('./src/utils/emoji-letters.js');
 const { sendEmbed } = require('./src/utils/default-embeder');
 const QuizzController = require('./src/controllers/quizz.controller.js');
 const LivroController = require('./src/controllers/livro.controller.js');
+const TopicoController = require('./src/controllers/topico.controller.js');
 const livro = require('./src/assets/livro.json');
+const { validarTopico } = require('./src/controllers/topico.controller.js');
 bot.quizz = {};
 
 
 bot.on('ready', () => {
-    console.log("=== BOT INICIADO ===");
-    console.log("ENV:" ,ENV, "\nPREFIX:", PREFIX, "\n\n\n")
+    console.log("=========> BOT INICIADO <=========");
+    console.log("ENV:" ,ENV, "\nPREFIX:", PREFIX)
 });
 
 
@@ -58,20 +60,10 @@ bot.on('message', msg => { // Evento dispara sempre que alguém manda uma mensag
                         { name:'\u200B', value: '**Você precisa informar o campo de leitura.\n`!ler {topico}`**'}]);
                     break;
                 }
-                // OBTENDO TOPICOS VALIDOS PADRÃO.
-                let topicosValidos = [];
-                for (let topico in livro)
-                    topicosValidos.push(topico);
 
-                // PODEMOS FAZER O REPLACE PARA ACEITAR VALORES ALÉM DAS CHAVES DO OBJETO LIVRO
-                let topico = args[1].toLowerCase().replace(/variavel|variável+/g, 'var')
-                    .replace(/funcao|funçao|função+/g, 'func')
-                    .replace(/objeto+/g, 'obj');
-                
-                if (!topicosValidos.includes(topico)) 
+                if (!validarTopico(livro, args[1])) 
                     sendEmbed(msg, 'ERROR', 'Campo Faltando', [
                         { name:'\u200B', value: '**Não foi possível encontrar esse tópico.\nUtilize o comando `!livro` para ver a lista de tópicos**'}]);
-
                 else {
                     let paginaIndex = 1; // ESSE VALOR VIRIA DO BANCO DIZENDO QUAL FOI A ÚLTIMA PÁGINA ACESSADA.
                     let paginas = livro[topico].pages;
@@ -80,13 +72,29 @@ bot.on('message', msg => { // Evento dispara sempre que alguém manda uma mensag
                 break;
 
             case 'quizz':
+                let topico_list = [];
+                let invalido_at = null;
+                if (args[1]) {
+                    // RETIRANDO TÓPICOS DO COMANDO, ARGS[0] É O INÍCIO DO COMANDO POR ISSO É FILTRADO.
+                    topico_list = args.filter( (_, index) => index !== 0);
+                    
+                    // OBTENDO POSIÇÃO DE POSSÍVEL TÓPICO INVÁLIDO
+                    invalido_at = TopicoController.obterTopicoInvalidoFromArray(livro, topico_list);
+
+                    if (invalido_at !== null) {
+                        sendEmbed(msg, 'ERROR', 'Tópico Inválido', [
+                            { name:'\u200B', value: `Opa, parece que você se enganou agente, o tópico "${topico_list[invalido_at]}" não existe nos arquivos. \n\n** :gear:  Se quiser uma lista completa dos tópcios utilize o comando: :gear:\n\`!livro\`**`}]);      
+                        break;
+                    }
+                }
+
                 if (!bot.quizz[msg.channel.id]) {
-                    bot.quizz[msg.channel.id] = true; // Setando quest como true.
-
-                    let perguntas = QuizzController.obterPerguntas();
                     const ALTERNATIVAS = [ genLetterAsEmoji('a'), genLetterAsEmoji('b'), genLetterAsEmoji('c'), genLetterAsEmoji('d')];
+                    let perguntas = QuizzController.obterPerguntas(!invalido_at ? topico_list : null);
                     let pContador = 0;
-
+                    bot.quizz[msg.channel.id] = true; // Setando quest como true.
+                    
+                    // =========> INICIAR QUIZZ <=========
                     QuizzController.handleQuizz(msg, bot, perguntas, perguntas.length, ALTERNATIVAS, pContador);
                 }
                 else 

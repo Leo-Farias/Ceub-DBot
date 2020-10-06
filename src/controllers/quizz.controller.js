@@ -9,14 +9,12 @@ const { sendEmbed } = require('../utils/default-embeder');
  * perguntas repitidas.
  * @return {Array} retorna array de perguntas {Object}.
 */
-const obterPerguntas = (qtd_perguntas = 5) => {
-    let perguntasIds = Object.keys(perguntas);
-    let todasPerguntas = [];
-    shuffle(perguntasIds);
-
-    for (let i = 0; i < qtd_perguntas; i++) todasPerguntas.push(perguntas[perguntasIds[i]]);
+const obterPerguntas = (filtroTopicos, qtd_perguntas = 5) => {
+    let todasPerguntas = Object.values(perguntas);
+    if (filtroTopicos.length > 0) todasPerguntas = todasPerguntas.filter(pergunta => filtroTopicos.includes(pergunta.topico));
+    shuffle(todasPerguntas);
     
-    return todasPerguntas;
+    return todasPerguntas.filter((_, index) => index < qtd_perguntas);
 }
 
 const handlePergunta = (pergunta, INDEX_PERGUNTA, num_perguntas, tempo) => {
