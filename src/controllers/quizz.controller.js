@@ -1,7 +1,39 @@
 const perguntas = require('../assets/perguntas.json');
+const livro = require('../assets/livro.json');
 const { MessageAttachment } = require('discord.js');
 const { shuffle } = require('../utils/array-handler.js');
 const { sendEmbed } = require('../utils/default-embeder');
+const { genLetterAsEmoji } = require('../utils/emoji-letters.js');
+
+
+const obterInfoQuizz = (msg, bot, args, TopicoController, DificuldadeController, level) => {
+    let topico_list = [];
+    let invalido_at = null;
+    if (args[1]) {
+        // RETIRANDO TÓPICOS DO COMANDO, ARGS[0] É O INÍCIO DO COMANDO POR ISSO É FILTRADO.
+        topico_list = args.filter( (_, index) => index !== 0);
+        // OBTENDO POSIÇÃO DE POSSÍVEL TÓPICO INVÁLIDO
+        invalido_at = TopicoController.obterTopicoInvalidoFromArray(livro, topico_list);
+
+        if (invalido_at !== null) {
+            sendEmbed(msg, 'ERROR', 'Tópico Inválido', [
+                { name:'\u200B', value: `Opa, parece que você se enganou agente, o tópico "${topico_list[invalido_at]}" não existe nos arquivos. \n\n** :gear:  Se quiser uma lista completa dos tópcios utilize o comando: :gear:\n\`!livro\`**`}]);      
+            return [ null, null ];
+        }
+    }
+    const ALTERNATIVAS = [ genLetterAsEmoji('a'), genLetterAsEmoji('b'), genLetterAsEmoji('c'), genLetterAsEmoji('d')];
+    const dificuldades = DificuldadeController.obterDificuldadePorNivel(level);
+    let perguntas = obterPerguntas(!invalido_at ? topico_list : null, dificuldades);
+    
+    if (!perguntas) {
+        sendEmbed(msg, 'ERROR', 'Nenhuma Pergunta Encontrada', [
+            { name:'\u200B', value: `Opa, parece que não conseguimos encontrar perguntas para você.`}]);
+        return [ null, null ];      
+    }
+    bot.quizz[msg.channel.id] = true; // Setando quest como true.
+
+    return [ALTERNATIVAS, perguntas];
+}
 
 /**
  * Embaralhar e receber perguntas do banco de dados.
@@ -153,4 +185,4 @@ const handleQuizz = (msg, bot, perguntas, num_perguntas, alternativas, pContador
     });
 }
 
-module.exports = { obterPerguntas, handlePergunta, handleQuizz };
+module.exports = { obterPerguntas, handlePergunta, handleQuizz, obterInfoQuizz };

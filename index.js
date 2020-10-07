@@ -38,64 +38,14 @@ bot.on('message', msg => { // Evento dispara sempre que alguém manda uma mensag
     // Separação de argumentos para comandos com mais opções. $escolher 1 => args[0] escolher, args[1] => 1
     let args = msg.content.substring(PREFIX.length).split(" ");    
     try{
-        bot.commands.get(args[0]).execute(msg);
+        bot.commands.get(args[0]).execute(msg, bot);
     } catch(err) {
-        switch(args[0].toLowerCase()) {
-            case 'ler':
-                if (!args[1]) {
-                    sendEmbed(msg, 'ERROR', 'Campo Faltando', [
-                        { name:'\u200B', value: '**Você precisa informar o campo de leitura.\n`!ler {topico}`**'}]);
-                    break;
-                }
+        console.log(err);
+        sendEmbed(msg, 'ALERT', 'ERRO 404: COMANDO NÃO ENCONTRADO.', [
+            { name:'\u200B', value: `Não foi possível encontrar o comando \`${args[0]}\` na base de dados.` }
+        ])
+        console.log("NO OPTION FOR: '" + msg.content + "'");
 
-                if (!validarTopico(livro, args[1])) 
-                    sendEmbed(msg, 'ERROR', 'Campo Faltando', [
-                        { name:'\u200B', value: '**Não foi possível encontrar esse tópico.\nUtilize o comando `!livro` para ver a lista de tópicos**'}]);
-                else {
-                    let paginaIndex = 1; // ESSE VALOR VIRIA DO BANCO DIZENDO QUAL FOI A ÚLTIMA PÁGINA ACESSADA.
-                    let paginas = livro[topico].pages;
-                    LivroController.sendPagina(msg, paginas, paginaIndex);
-                }
-                break;
-            case 'quizz':
-                let topico_list = [];
-                let invalido_at = null;
-                if (args[1]) {
-                    // RETIRANDO TÓPICOS DO COMANDO, ARGS[0] É O INÍCIO DO COMANDO POR ISSO É FILTRADO.
-                    topico_list = args.filter( (_, index) => index !== 0);
-                    
-                    // OBTENDO POSIÇÃO DE POSSÍVEL TÓPICO INVÁLIDO
-                    invalido_at = TopicoController.obterTopicoInvalidoFromArray(livro, topico_list);
-
-                    if (invalido_at !== null) {
-                        sendEmbed(msg, 'ERROR', 'Tópico Inválido', [
-                            { name:'\u200B', value: `Opa, parece que você se enganou agente, o tópico "${topico_list[invalido_at]}" não existe nos arquivos. \n\n** :gear:  Se quiser uma lista completa dos tópcios utilize o comando: :gear:\n\`!livro\`**`}]);      
-                        break;
-                    }
-                }
-
-                if (!bot.quizz[msg.channel.id]) {
-                    const ALTERNATIVAS = [ genLetterAsEmoji('a'), genLetterAsEmoji('b'), genLetterAsEmoji('c'), genLetterAsEmoji('d')];
-                    const dificuldades = DificuldadeController.obterDificuldadePorNivel(80);
-                    let pContador = 0;
-                    let perguntas = QuizzController.obterPerguntas(!invalido_at ? topico_list : null, dificuldades);
-                    if (!perguntas) {
-                        sendEmbed(msg, 'ERROR', 'Nenhuma Pergunta Encontrada', [
-                            { name:'\u200B', value: `Opa, parece que não conseguimos encontrar perguntas para você.`}]);      
-                        break;
-                    }
-                    bot.quizz[msg.channel.id] = true; // Setando quest como true.
-                    
-                    // =========> INICIAR QUIZZ <=========
-                    QuizzController.handleQuizz(msg, bot, perguntas, perguntas.length, ALTERNATIVAS, pContador);
-                }
-                else 
-                    msg.channel.send(`Já existe um quizz ocorrendo neste momento.`);
-                break;
-            default:
-                console.log("NO OPTION FOR: '" + msg.content + "'")
-                break;
-        }
     }
     
     
