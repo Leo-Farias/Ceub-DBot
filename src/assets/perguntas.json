@@ -5,7 +5,8 @@
         "alternativaCorreta": "ls[-1]",
         "topico": "var",
         "pontos": 40,
-        "time": 25000
+        "dificuldade": "easy_1",
+        "time": 5000
     },
     "1": {
         "label": "Qual é o resultado printado do seguinte código em python?\n`print(14//4, 14%4, 12.0/4)`",
@@ -13,7 +14,8 @@
         "alternativaCorreta": "3 2 3.0",
         "topico": "var",
         "pontos": 25,
-        "time": 25000
+        "dificuldade": "easy_2",
+        "time": 5000
     },
     "2": {
         "label": "Qual é a principal diferença entre os tipos de dado Lista e Tupla em python?",
@@ -25,7 +27,8 @@
         "alternativaCorreta": "Tuplas são imutáveis e Listas são mutáveis",
         "topico": "var",
         "pontos": 40,
-        "time": 25000
+        "dificuldade": "easy_3",
+        "time": 5000
     },
     "3": {
         "label": "Qual a alternativa correta que retornaria o valor 4, dentro dessa lista?\n`ls = [0, 1, {\"Cachorro\": [2, (3, {\"Gato\": 4}), 5]}, 6]`",
@@ -37,7 +40,8 @@
         "alternativaCorreta": "ls[2][\"Cachorro\"][1][1][\"Gato\"]",
         "topico": "var",
         "pontos": 80,
-        "time": 25000
+        "dificuldade": "hard_1",
+        "time": 5000
     },
     "4": {
         "label": "Levando em consideração a biblioteca sys, qual comando retorna a versão do python utilizada pelo programa?",
@@ -49,7 +53,8 @@
         "alternativaCorreta": "print(sys.version)",
         "topico": "obj",
         "pontos": 30,
-        "time": 25000
+        "dificuldade": "hard_2",
+        "time": 5000
     },
     "5": {
         "label": "Qual comando exibiria a data atual no formato Ano-Mês-Dia, leve em consideração este código: \n\nimport datetime\nnow = datetime.datetime.now()\nprint('Data Atual: ')",
@@ -61,7 +66,8 @@
         "alternativaCorreta": "print(now.strftime('%Y-%m-%d'))",
         "topico": "obj",
         "pontos": 80,
-        "time": 25000
+        "dificuldade": "hard_3",
+        "time": 5000
     },
     "6": {
         "label": "Qual a saída do seguinte código: \n\nvalorUm = 5 ** 2\nvalorDois = 5 * 3\nprint(ValorUm)\nprint(ValorDois)",
@@ -73,7 +79,8 @@
         "alternativaCorreta": "\n25\n15",
         "topico": "var",
         "pontos": 20,
-        "time": 25000
+        "dificuldade": "medium_2",
+        "time": 5000
     },
     "7": {
         "label": "O que é exibido na tela quando este código é executado? \n\nnome = 'Roberto Carlos'\nprint(nome[2::-1])",
@@ -86,6 +93,7 @@
         "alternativaCorreta": "boR",
         "topico": "var",
         "pontos": 50,
-        "time": 25000
+        "dificuldade": "medium_1",
+        "time": 5000
     }
 }

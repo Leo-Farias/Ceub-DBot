@@ -17,6 +17,7 @@ const { sendEmbed } = require('./src/utils/default-embeder');
 const QuizzController = require('./src/controllers/quizz.controller.js');
 const LivroController = require('./src/controllers/livro.controller.js');
 const TopicoController = require('./src/controllers/topico.controller.js');
+const DificuldadeController = require('./src/controllers/dificuldade.controller.js');
 const livro = require('./src/assets/livro.json');
 const { validarTopico } = require('./src/controllers/topico.controller.js');
 bot.quizz = {};
@@ -90,8 +91,14 @@ bot.on('message', msg => { // Evento dispara sempre que alguém manda uma mensag
 
                 if (!bot.quizz[msg.channel.id]) {
                     const ALTERNATIVAS = [ genLetterAsEmoji('a'), genLetterAsEmoji('b'), genLetterAsEmoji('c'), genLetterAsEmoji('d')];
-                    let perguntas = QuizzController.obterPerguntas(!invalido_at ? topico_list : null);
+                    const dificuldades = DificuldadeController.obterDificuldadePorNivel(80);
                     let pContador = 0;
+                    let perguntas = QuizzController.obterPerguntas(!invalido_at ? topico_list : null, dificuldades);
+                    if (!perguntas) {
+                        sendEmbed(msg, 'ERROR', 'Nenhuma Pergunta Encontrada', [
+                            { name:'\u200B', value: `Opa, parece que não conseguimos encontrar perguntas para você.`}]);      
+                        break;
+                    }
                     bot.quizz[msg.channel.id] = true; // Setando quest como true.
                     
                     // =========> INICIAR QUIZZ <=========
