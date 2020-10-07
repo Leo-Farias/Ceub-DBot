@@ -35,4 +35,8 @@ function runCommand(msg){
 
 
 
-module.exports = { runCommand }
+module.exports = {
+    name: 'code',
+	description: 'Run Code from Discord text',
+	execute: runCommand
+}
