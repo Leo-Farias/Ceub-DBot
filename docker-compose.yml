@@ -15,4 +15,4 @@ services:
     working_dir: /opt/Ceub-DBot
     environment:
       ENV: development
-    command: "bash -c 'rm -rf node_modules && npm i && npm run dev'"
+    command: "bash -c 'rm -rf node_modules; npm i && npm run dev'"
