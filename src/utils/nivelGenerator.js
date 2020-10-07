@@ -15,4 +15,4 @@ function nivelGenerator(){
 }
 nivelGenerator()
 //console.log(nivelGenerator())
-module.exports = nivelGenerator
+module.exports = nivelGenerator 
