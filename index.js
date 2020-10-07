@@ -38,15 +38,6 @@ bot.on('message', msg => { // Evento dispara sempre que alguém manda uma mensag
         bot.commands.get(args[0]).execute(msg);
     } catch(err) {
         switch(args[0].toLowerCase()) {
-            case 'help' || 'ajuda' || 'sos':
-                helpMessageList = '-=-=-= Menu =-=-=-\n'
-                bot.commands.forEach((command) => {
-                    helpMessageList += `${command.name}: ${command.description}\n`
-                })
-                msg.channel.send(helpMessageList) 
-                break;
-            case 'livro': LivroController.sendLivro(msg, livro);
-                break;
             case 'ler':
                 if (!args[1]) {
                     sendEmbed(msg, 'ERROR', 'Campo Faltando', [
