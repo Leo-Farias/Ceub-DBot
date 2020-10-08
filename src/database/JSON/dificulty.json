@@ -1,0 +1,11 @@
+[
+    { "name": "easy_1", "min": 1, "max": 15 },
+    { "name": "easy_2", "min": 16, "max": 30 },
+    { "name": "easy_3", "min": 31, "max": 45 },
+    { "name": "medium_1", "min": 46, "max": 60 },
+    { "name": "medium_2", "min": 61, "max": 75 },
+    { "name": "medium_3", "min": 76, "max": 90 },
+    { "name": "hard_1", "min": 91, "max": 105 },
+    { "name": "hard_2", "min": 106, "max": 120},
+    { "name": "hard_3", "min": 121, "max": 135 }
+]

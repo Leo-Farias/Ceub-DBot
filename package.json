@@ -3,16 +3,30 @@
     "discord.js": "^12.3.1",
     "dotenv": "^8.2.0",
     "knex": "^0.21.5",
-    "mysql": "^2.18.1",
+    "mysql2": "^2.2.5",
+    "pg": "^8.4.0",
     "shelljs": "^0.8.4"
   },
   "scripts": {
-    "start": "node ./src/index.js",
-    "dev": "nodemon --ignore node_modules ./src/index.js",
+    "build": "babel src --extensions \".js\" --out-dir dist --copy-files --no-copy-ignored",
+    "start": "node ./index.js",
+    "dev": "nodemon --exec babel-node ./index.js",
     "knex:migrate": "knex migrate:latest",
     "knex:rollback": "knex --knexfile knexfile.js migrate:rollback"
   },
   "devDependencies": {
-    "nodemon": "^2.0.4"
+    "nodemon": "^2.0.4",
+    "@babel/cli": "^7.10.1",
+    "@babel/core": "^7.10.2",
+    "@babel/node": "^7.10.1",
+    "@babel/preset-env": "^7.10.2",
+    "babel-plugin-module-resolver": "^4.0.0"
+  },
+  "nodemonConfig": {
+    "ignore": [
+      "node_modules",
+      "*.json"
+    ],
+    "delay": "2500"
   }
 }

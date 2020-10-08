@@ -1,26 +1,26 @@
-const desafio = {
-  titulo_desafio: 'Desafio de Somar',
-  descricao_desafio: 'Crie uma funcao que permita somar qualquer dois floats ou inteiros',
-  nivel: 1,
-  testes: [
-    { entrada: [4,5], saida: 9},
-    { entrada: [4,2], saida: 6},
-    { entrada: [42,25], saida: 67},
-    { entrada: [0,5], saida: 5},
-    { entrada: [99,1], saida: 100},
-    { entrada: [9.05,2.3], saida: 11.35},
-    { entrada: [5.03,2], saida: 7.03},
-    { entrada: [-50,3], saida: -47}
-  ]
-}
+const fs = require('fs')
+//ALTER TABLE discord_dev.tb_desafios ADD testes_json json NOT NULL;
+
+
 
 exports.seed = function(knex) {
+  const testFiles = fs.readdirSync('./src/challenges').filter(file => file.endsWith('.challenge.json'));
+  var challenges = []
+  for (const file of testFiles) {
+      console.log("Importing challenge:", file)
+      let fileContent = require('../../challenges/' + file)
+      let {
+        titulo_desafio,
+        descricao_desafio,
+        nivel
+      } = fileContent
+      let testes_json = JSON.stringify(fileContent.testes)
+      challenges.push({ titulo_desafio, descricao_desafio, nivel, testes_json })
+  }
+  console.log(challenges)
   return knex('discord_dev.tb_desafios')
-    .insert({
-      titulo_desafio: desafio['titulo_desafio'],
-      descricao_desafio: desafio['descricao_desafio'],
-      nivel: desafio['nivel']
-  })
+    .insert(challenges)
+  /*
     .then((result) => {
       const testCase = desafio.testes
       let testeObjArray = []
@@ -40,4 +40,5 @@ exports.seed = function(knex) {
       return knex('tb_desafio_testes')
       .insert(testeObjArray)
     })
+    */
 }

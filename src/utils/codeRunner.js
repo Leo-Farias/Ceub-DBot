@@ -18,10 +18,7 @@ const runCode = (code, interpreter = 'python') => {
                 
                 if(commandReturn.stdout) resolve(commandReturn.stdout)
                 else {
-                    const fullCode = `\\\`\\\`\\\`\nprint("Hello World")\n\\\`\\\`\\\``
-                    const lineCode = `\\\`print("Hello World")\\\``
-                    const badFormat = `Codigo mal formatado. Use:\n${lineCode}\nou\n${fullCode}`
-                    reject(badFormat)
+                    reject(commandReturn.stderr)
                 }
             } catch (err) {
                 console.log(err)

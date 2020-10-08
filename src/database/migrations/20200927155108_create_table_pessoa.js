@@ -7,7 +7,7 @@ exports.up = function(knex) {
         pontuacao_duelo int(11) NOT NULL,
         xp int(11) NOT NULL,
         PRIMARY KEY (id_pessoa)
-      ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_bin; 
+      ); 
     `)
 };
 

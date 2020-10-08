@@ -9,7 +9,7 @@ exports.up = function(knex) {
         PRIMARY KEY (id_quizz),
         KEY tb_quizz_FK (fk_id_solicitante),
         CONSTRAINT tb_quizz_FK FOREIGN KEY (fk_id_solicitante) REFERENCES tb_pessoa (id_pessoa)
-      ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_bin;
+      );
     `)
 };
 

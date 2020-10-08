@@ -11,7 +11,7 @@ exports.up = function(knex) {
         PRIMARY KEY (id_desafio),
         KEY tb_desafio_FK (nivel),
         CONSTRAINT tb_desafio_FK FOREIGN KEY (nivel) REFERENCES tb_nivel (nivel)
-      ) ENGINE=InnoDB;
+      );
     `)
 };
 

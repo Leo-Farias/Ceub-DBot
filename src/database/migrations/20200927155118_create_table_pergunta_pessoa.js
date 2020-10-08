@@ -10,7 +10,7 @@ exports.up = function(knex) {
         KEY tb_pergunta_pessoa_FK_1 (fk_id_pergunta),
         CONSTRAINT tb_pergunta_pessoa_FK FOREIGN KEY (fk_id_pessoa) REFERENCES tb_pessoa (id_pessoa),
         CONSTRAINT tb_pergunta_pessoa_FK_1 FOREIGN KEY (fk_id_pergunta) REFERENCES tb_perguntas (id_pergunta)
-      ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_bin;
+      );
     `)
 };
 

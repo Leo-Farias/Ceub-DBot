@@ -1,13 +1,21 @@
 version: '3.0'
 services:
   db:
-    image: mysql:5.7.31
+    image: mariadb:latest
     ports:
       - 3306:3306
     environment:
       MYSQL_ROOT_PASSWORD: uniceub
       MYSQL_DATABASE: discord_dev
-
+  #db2:
+  #  image: postgres:latest
+  #  ports:
+  #    - 5432:5432
+  #  environment:
+  #    POSTGRES_PASSWORD: uniceub
+  #    POSTGRES_USER: uniceub
+  #    POSTGRES_DB: discord_dev
+  #    LANG: en_US.utf8
   bot:
     build: .
     volumes: 
