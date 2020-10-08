@@ -6,7 +6,7 @@ services:
       - 3306:3306
     environment:
       MYSQL_ROOT_PASSWORD: uniceub
-      MYSQL_DATABASE: dev
+      MYSQL_DATABASE: discord_dev
 
   bot:
     build: .
@@ -15,4 +15,8 @@ services:
     working_dir: /opt/Ceub-DBot
     environment:
       ENV: development
+      DB_USER: root
+      DB_PASSWORD: uniceub
+      DB_NAME: discord_dev
+      DB_HOST: db
     command: "bash -c 'rm -rf node_modules; npm i && npm run dev'"
