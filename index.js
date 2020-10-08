@@ -14,7 +14,10 @@ const { genLetterAsEmoji } = require('./src/utils/emoji-letters.js');
 const { sendEmbed } = require('./src/utils/default-embeder');
 const QuizzController = require('./src/controllers/quizz.controller.js');
 const LivroController = require('./src/controllers/livro.controller.js');
+const TopicoController = require('./src/controllers/topico.controller.js');
+const DificuldadeController = require('./src/controllers/dificuldade.controller.js');
 const livro = require('./src/assets/livro.json');
+const { validarTopico } = require('./src/controllers/topico.controller.js');
 bot.quizz = {};
 
 //const joinEvent = require('./src/events/join.event') 
@@ -35,52 +38,14 @@ bot.on('message', msg => { // Evento dispara sempre que alguém manda uma mensag
     // Separação de argumentos para comandos com mais opções. $escolher 1 => args[0] escolher, args[1] => 1
     let args = msg.content.substring(PREFIX.length).split(" ");    
     try{
-        bot.commands.get(args[0]).execute(msg);
+        bot.commands.get(args[0]).execute(msg, bot);
     } catch(err) {
-        switch(args[0].toLowerCase()) {
-            case 'ler':
-                if (!args[1]) {
-                    sendEmbed(msg, 'ERROR', 'Campo Faltando', [
-                        { name:'\u200B', value: '**Você precisa informar o campo de leitura.\n`!ler {topico}`**'}]);
-                    break;
-                }
-                // OBTENDO TOPICOS VALIDOS PADRÃO.
-                let topicosValidos = [];
-                for (let topico in livro)
-                    topicosValidos.push(topico);
-    
-                // PODEMOS FAZER O REPLACE PARA ACEITAR VALORES ALÉM DAS CHAVES DO OBJETO LIVRO
-                let topico = args[1].toLowerCase().replace(/variavel|variável+/g, 'var')
-                    .replace(/funcao|funçao|função+/g, 'func')
-                    .replace(/objeto+/g, 'obj');
-    
-                if (!topicosValidos.includes(topico)) 
-                    sendEmbed(msg, 'ERROR', 'Campo Faltando', [
-                        { name:'\u200B', value: '**Não foi possível encontrar esse tópico.\nUtilize o comando `!livro` para ver a lista de tópicos**'}]);
-    
-                else {
-                    let paginaIndex = 1; // ESSE VALOR VIRIA DO BANCO DIZENDO QUAL FOI A ÚLTIMA PÁGINA ACESSADA.
-                    let paginas = livro[topico].pages;
-                    LivroController.sendPagina(msg, paginas, paginaIndex);
-                }
-                break;
-            case 'quizz':
-                if (!bot.quizz[msg.channel.id]) {
-                    bot.quizz[msg.channel.id] = true; // Setando quest como true.
-    
-                    let perguntas = QuizzController.obterPerguntas();
-                    const ALTERNATIVAS = [ genLetterAsEmoji('a'), genLetterAsEmoji('b'), genLetterAsEmoji('c'), genLetterAsEmoji('d')];
-                    let pContador = 0;
-    
-                    QuizzController.handleQuizz(msg, bot, perguntas, perguntas.length, ALTERNATIVAS, pContador);
-                }
-                else 
-                    msg.channel.send(`Já existe um quizz ocorrendo neste momento.`);
-                break;
-            default:
-                console.log("NO OPTION FOR: '" + msg.content + "'")
-                break;
-        }
+        console.log(err);
+        sendEmbed(msg, 'ALERT', 'ERRO 404: COMANDO NÃO ENCONTRADO.', [
+            { name:'\u200B', value: `Não foi possível encontrar o comando \`${args[0]}\` na base de dados.` }
+        ])
+        console.log("NO OPTION FOR: '" + msg.content + "'");
+
     }
     
     
