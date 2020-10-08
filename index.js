@@ -12,13 +12,6 @@ const ENV = process.env.ENV
 // Obtendo demais recursos do projeto.
 const { genLetterAsEmoji } = require('./src/utils/emoji-letters.js');
 const { sendEmbed } = require('./src/utils/default-embeder');
-const QuizzController = require('./src/controllers/quizz.controller.js');
-const LivroController = require('./src/controllers/livro.controller.js');
-const TopicoController = require('./src/controllers/topico.controller.js');
-const DificuldadeController = require('./src/controllers/dificuldade.controller.js');
-const livro = require('./src/assets/livro.json');
-const { validarTopico } = require('./src/controllers/topico.controller.js');
-bot.quizz = {};
 
 //const joinEvent = require('./src/events/join.event') 
 bot.on('ready', () => {
@@ -45,14 +38,12 @@ bot.on('message', msg => { // Evento dispara sempre que alguém manda uma mensag
             { name:'\u200B', value: `Não foi possível encontrar o comando \`${args[0]}\` na base de dados.` }
         ])
         console.log("NO OPTION FOR: '" + msg.content + "'");
-
     }
-    
-    
 });
 
+
 bot.commands = new Discord.Collection()
-const commandFiles = fs.readdirSync('./src/commands').filter(file => file.endsWith('.js'));
+const commandFiles = fs.readdirSync('./src/commands').filter(file => file.endsWith('.command.js'));
 for (const file of commandFiles) {
     console.log("Importing file:", file)
     const command = require(`./src/commands/${file}`)

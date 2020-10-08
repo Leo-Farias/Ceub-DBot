@@ -5,7 +5,7 @@ exports.up = function(knex) {
         nivel int(11) NOT NULL,
         nivel_xp int(11) NOT NULL,
         PRIMARY KEY (nivel)
-      ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_bin;
+      );
       
     `)
 };

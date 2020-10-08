@@ -13,7 +13,7 @@ exports.up = function(knex) {
         PRIMARY KEY (id_pergunta),
         CONSTRAINT tb_perguntas_FK FOREIGN KEY (fk_id_tipo) REFERENCES tb_pergunta_tipo (id_tipo),
         CONSTRAINT tb_perguntas_FK_1 FOREIGN KEY (fk_nivel) REFERENCES tb_nivel (nivel)
-      ) ENGINE=InnoDB;
+      );
     `)
 };
 

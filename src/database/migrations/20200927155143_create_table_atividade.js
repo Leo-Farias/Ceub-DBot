@@ -11,7 +11,7 @@ exports.up = function(knex) {
         KEY tb_atividade_FK_1 (fk_id_desafio),
         CONSTRAINT tb_atividade_FK FOREIGN KEY (fk_id_pergunta) REFERENCES tb_perguntas (id_pergunta),
         CONSTRAINT tb_atividade_FK_1 FOREIGN KEY (fk_id_desafio) REFERENCES tb_desafios (id_desafio)
-      ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_bin;
+      );
     `)
 };
 

@@ -9,7 +9,7 @@ exports.up = function(knex) {
         PRIMARY KEY (id_progresso),
         KEY tb_progresso_livrso_FK (fk_id_pessoa),
         CONSTRAINT tb_progresso_livrso_FK FOREIGN KEY (fk_id_pessoa) REFERENCES tb_pessoa (id_pessoa)
-      ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_bin;
+      );
     `)
 };
 

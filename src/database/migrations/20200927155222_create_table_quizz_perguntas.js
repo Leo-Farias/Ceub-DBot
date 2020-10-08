@@ -10,7 +10,7 @@ exports.up = function(knex) {
         KEY tb_perguntas_quizz_FK_1 (fk_id_atividade),
         CONSTRAINT tb_perguntas_quizz_FK FOREIGN KEY (fk_id_quizz) REFERENCES tb_quizz (id_quizz),
         CONSTRAINT tb_perguntas_quizz_FK_1 FOREIGN KEY (fk_id_atividade) REFERENCES tb_atividade (id_atividade)
-      ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_bin; 
+      ); 
     `)
 };
 

@@ -2,7 +2,7 @@ const commandParser = require('../utils/commandParser')
 const runCode = require('../utils/codeRunner')
 const codeExtractor = require('../utils/codeExtractor')
 
-logInfo = (msg) => {
+const logInfo = (msg) => {
     console.log(`INFOS:
     USUARIO: ${msg.author.username}
     USER_ID: ${msg.author.id}

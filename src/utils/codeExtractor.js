@@ -1,4 +1,4 @@
-codeExtract = (msg) => {
+const codeExtract = (msg) => {
     const code = msg.content
     console.log("CODE:", code)
     const regexFullCode = /```((.|\n)*)```/

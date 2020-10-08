@@ -15,7 +15,7 @@ exports.up = function(knex) {
         CONSTRAINT tb_duelo_FK FOREIGN KEY (fk_id_desafiado) REFERENCES tb_pessoa (id_pessoa),
         CONSTRAINT tb_duelo_FK_1 FOREIGN KEY (fk_id_desafiante) REFERENCES tb_pessoa (id_pessoa),
         CONSTRAINT tb_duelo_FK_2 FOREIGN KEY (fk_atividade) REFERENCES tb_atividade (id_atividade)
-      ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_bin;  
+      );  
     `)
 };
 
