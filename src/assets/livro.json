@@ -1,130 +1,214 @@
 {
-    "var": {
-        "nome": "Variável",
+    "introducao": {
+        "nome": "Introdução",
         "page_max": 4,
         "pages": [
             {
                 "color": "0x00ff00",
                 "author": {
-                    "name": "Estudo de Variáveis - Pg 1 de 4"
+                    "name": "Primeiros passos com Python - Pg 1 de 4"
                 },
                 "fields": [
-                    { "name": "Tópico", "value": "Valor do Campo" }
-                ],
-                "footer": {
-                    "text": "Mensagem no fim da página"
-                }
+                    { "name": "\u200B", "value": "Olá jovem aprendiz seja bem-vindo ao livro 1 este tem como objetivo fazer com que você rode seu primeiro programa utilizando Python. Python é uma linguagem interpretada, por isso você precisará de um interpretador python que lê e executa os código em Python, ensinaremos ainda nesse livro como instalá-lo no seu computador e além disso é uma linguagem fracamente tipada, isso quer dizer que você não precisa declarar o tipo de uma variável, iremos falar mais detalhadamente sobre variáveis no livro 2. Existem várias páginas na web que podem rodar códigos escritos em python, nosso objetivo é fazer com que você rode seus programas no discord e no seu próprio computador. Na programação é muito comum, quando começamos a aprender uma linguagem nova iniciar sempre com o famoso programa “Olá Mundo”, que consiste basicamente em imprimir a frase “Olá Mundo”. Em python você pode escrever o programa Olá Mundo em uma linha: \n print(“Olá Mundo!”)" }
+                ]
+                
             },
             {
                 "color": "0x00ff00",
                 "author": {
-                    "name": "Estudo de Variáveis - Pg 2 de 4"
+                    "name": "Primeiros passos com Python - Pg 2 de 4"
                 },
                 "fields": [
-                    { "name": "\u200B", "value": "Valor do Campo com tópico vazio `(O mesmo vale para o campo value)`" }
-                ],
-                "footer": {
-                    "text": "Mensagem no fim da página"
-                }
+                    { "name": "\u200B", "value": "Se esse programa anterior rodar no seu sistema então qualquer programa feito em python também irá rodar. Para ter o python instalado em sua máquina você precisa, reconhecer qual sistema operacional você utiliza, caso você utilize alguma distribuição Linux, provavelmente você já tenha o Python instalado no seu computador, para saber mais sobre o Linux digite o comando: !linux, caso você utilize Windows, primeiro pense se isso vale a pena mesmo, brincadeiras à parte, você pode fazer o Download no site oficial do Python, a versão mais recente do Python, a qual falaremos durante os livros e que recomendamos que você baixe é o Python 3, para saber um pouco mais sobre Windows você pode digitar o comando: !windows." }
+                ]
+                
             },
             {
                 "color": "0x00ff00",
                 "author": {
-                    "name": "Estudo de Variáveis - Pg 3 de 4"
+                    "name": "Primeiros passos com Python - Pg 3 de 4"
                 },
                 "fields": [
-                    { "name": "Listagem sem criar vários Tópicos", "value": "🍑Pêssego\n🍎Maçã\n🍈Melância\n🍍Abacaxi" }
-                ],
-                "footer": {
-                    "text": "Mensagem no fim da página"
-                }
+                    { "name": "\u200B", "value": "Como dito anteriormente existem várias ferramentas para se escrever códigos em python você pode usar uma IDE (ambiente de desenvolvimento Integrado), ambientes na web já preparados para rodar seus códigos, mas você pode fazer isso também diretamente pelo terminal, basta abri-lo e digitar python, como resposta você terá a versão do python instalada no seu computador e também um espaço para adicionar seus códigos, é ali que você poderá rodar o seu programa Olá Mundo ensinado anteriormente, caso você execute e tenha como resposta a frase “Olá mundo!” impressa na tela, parabéns! Você acaba de executar seu programa feito em Python." }
+                ]
+                
             },
             {
                 "color": "0x00ff00",
                 "author": {
-                    "name": "Estudo de Variáveis - Pg 4 de 4"
+                    "name": "Primeiros passos com Python - Pg 4 de 4"
                 },
                 "fields": [
-                    { "name": "Tópico #1", "value": "Valor do Campo #1" },
-                    { "name": "Tópico #2", "value": "Valor do Campo #2" },
-                    { "name": "Tópico #3", "value": "Valor do Campo #3" },
-                    { "name": "Tópico #4", "value": "Valor do Campo #4" }
-                ],
-                "footer": {
-                    "text": "Mensagem no fim da página"
-                }
+                    { "name": "\u200B", "value": "Você também pode criar arquivos com extensão .py, ao executar esses arquivos você executará aquilo que está inserido nele. Para executar códigos em python o interpretador realiza a leitura do seu arquivo palavra a palavra, buscando o significado das mesmas e convertendo para um código executável Ou seja, ao encontrar a palavra print, por exemplo, o interpretador busca na biblioteca do python o significado dessa instrução e a converte para um código executável na máquina." }
+                ]
+               
+            }
+        ]
+    },
+    "var": {
+        "nome": "Variáveis",
+        "page_max": 6,
+        "pages": [
+            {
+                "color": "0x00ff00",
+                "author": {
+                    "name": "Estudo de Variáveis - Pg 1 de 6"
+                },
+                "fields": [
+                    { "name": "\u200B", "value": "Para entender o que são variáveis tente rodar o seguinte o programa, muito parecido com o “Olá Mundo” do livro 1, apenas um pouco modificado: \n \n texto = “Olá Mundo!” \n print(texto)" }
+                ]
+    
+            },
+            {
+                "color": "0x00ff00",
+                "author": {
+                    "name": "Estudo de Variáveis - Pg 2 de 6"
+                },
+                "fields": [
+                    { "name": "\u200B", "value": "O resultado deve ser o mesmo obtido no programa feito no livro 1, a diferença é que incluímos uma variável na primeira linha, “texto”, o objetivo é simples, armazenar valores, nesse caso a nossa variável guarda uma a frase “Olá Mundo!”, você guardar várias tipos de valores dentro de uma variável, um texto, um número inteiro, um número decimal, entre outros, em algumas linguagens você precisar dizer explicitamente qual o tipo de valor que sua variável está armazenando, em python, pelo fato de ser uma linguagem fracamente tipada isso não é necessário." }
+                ]
+                
+            },
+            {
+                "color": "0x00ff00",
+                "author": {
+                    "name": "Estudo de Variáveis - Pg 3 de 6"
+                },
+                "fields": [
+                    { "name": "\u200B", "value": "Você como um bom programador, deve adquirir algumas boas práticas na hora de programar, e necessário seguir algumas regras e sugestões, que deixam seu código claro e fácil de entender e evita que seu programa funcione corretamente sem erros. A seguir apresentamos algumas dicas que são muito importantes." }
+                ]
+                
+            },
+            {
+                "color": "0x00ff00",
+                "author": {
+                    "name": "Estudo de Variáveis - Pg 4 de 6"
+                },
+                "fields": [
+                    { "name": "\u200B", "value": "1 – Geralmente as variáveis tem nomes com significado, ou seja quando alguma outra pessoa ler seu código ela conseguirá entender sobre o valor da variável apenas pelo nome. \n 2 – Algo que é realmente muito importante é a documentação, você pode incluir comentários dentro do seu programa e dizer o que as variáveis que você declarou fazem. \n 3 – Elas podem ser longas, podem ter letras e números, mas não podem começar com um número, você pode usar letras maiúsculas mas geralmente utilizamos apenas letras minúsculas para variáveis. \n 4 – Em variáveis não é permitido utilizar espaço, para separar palavras compostas geralmente utilizamos os sublinhados. \n 5 – Não utilize nas variáveis palavras que o python tenha reservado para um determinado propósito programático, como por exemplo a palavra print." }
+                ]
+
+            },
+            {
+                "color": "0x00ff00",
+                "author": {
+                    "name": "Estudo de Variáveis - Pg 5 de 6"
+                },
+                "fields": [
+                    { "name": "\u200B", "value": "A partir desse momento, você está sujeito, assim como todo programador a cometer erros, entenda que isso é completamente normal, o importante é aprender a corrigi-los. Caso você tente rodar o seguinte código você encontrará um NameError: \n memsagem = “Este é meu terceiro programa!” \n print(mensagem)" }
+                ]
+                
+            },
+            {
+                "color": "0x00ff00",
+                "author": {
+                    "name": "Estudo de Variáveis - Pg 6 de 6"
+                },
+                "fields": [
+                    { "name": "\u200B", "value": "O NameError geralmente significa que usamos uma variável que não foi definida, nesse caso utilizamos mensagem e definimos memsagem, o problema nesse caso não está no erro ortografia e sim na variável que não foi declarada é tanto que se fizemos: \n memsagem = “Este é meu terceiro programa!” \n print(memsagem) \n O programa funcionaria perfeitamente, erros de digitação são comuns e acontecem sempre, acredite, mesmo os programadores mais experientes sofrem com isso, o importante é saber como lidar com isso da melhor maneira possível." }
+                ]
+                
+            }
+        ]
+    },
+    "dados": {
+        "nome": "Tipos de dados",
+        "page_max": 5,
+        "pages": [
+            {
+                "color": "0x00ff00",
+                "author": {
+                    "name": "Tipos de dados - Pg 1 de 5"
+                },
+                "fields": [
+                    { "name": "\u200B", "value": "Os programas reúnem vários formatos de informação por isso é importante conhecer sobre tipos de dados. Os números são usados com frequência e a partir deles podemos definir alguns tipos de dados como Inteiros e Floats. Os inteiros, assim como conhecemos na matemática, corresponde aos números naturais positivos e negativos, já o float representa um valor de ponto fluente de precisão simples, números decimais são do tipo float. Assim como na matemática é possível realizar operações aritméticas e operações com esses tipos de dados." }
+                ]
+                
+            },
+            {
+                "color": "0x00ff00",
+                "author": {
+                    "name": "Tipos de dados - Pg 2 de 5"
+                },
+                "fields": [
+                    { "name": "\u200B", "value": "Podemos somar, subtrair, multiplicar e dividir os inteiros e floats em python. Como nos exemplos a seguir: \n\n >>> 40 + 2 \n 42 \n\n >>> 43 - 1 \n 42 \n\n >>> 6 * 7 \n 42 \n\n >>> 84 / 2 \n 42 \n\n >>> 0.1 + 0.1 \n 0.2 \n\n >>> 2 * 0.1 \n 0.2" }
+                ]
+               
+            },
+            {
+                "color": "0x00ff00",
+                "author": {
+                    "name": "Tipos de dados - Pg 3 de 5"
+                },
+                "fields": [
+                    { "name": "\u200B", "value": "O Python também suporta a ordem das operações, portanto, você pode usar várias operações em uma expressão. Você também pode usar parênteses para modificar a ordem das operações, para que o Python possa avaliar sua expressão na ordem que você especificar. Por exemplo: \n\n >>> 1 + 1 * 5 \n 6 \n\n >>> (1 + 1) * 5 \n 10" }
+                ]
+                
+            },
+            {
+                "color": "0x00ff00",
+                "author": {
+                    "name": "Tipos de dados - Pg 4 de 5"
+                },
+                "fields": [
+                    { "name": "\u200B", "value": "Outro tipo de dado muito simples que é utilizado com frequência são as strings, uma string é basicamente uma série de caracteres, para declarar uma string em python basta que você use aspas simples ou duplas \n\n frase = “Essa frase é uma string” \n print(frase) \n\n todo o conteúdo que a variável frase está armazenando é uma string. " }
+                ]
+                
+            },
+            {
+                "color": "0x00ff00",
+                "author": {
+                    "name": "Tipos de dados - Pg 5 de 5"
+                },
+                "fields": [
+                    { "name": "\u200B", "value": "Assim como os inteiros e os floats é possível realizar algumas operações com strings, o operador + permite a concatenação das strings, podemos verificar isso no exemplo a seguir: \n\n primeiro = 'linux' \n segundo = 'windows' \n sugestao= primeiro + '>' + segundo \n print(sugestao) \n\n O operador * também funciona com strings, faz com que a string se repita, por exemplo, 'Ola'*3 é igual a 'OlaOlaOla'." }
+                ]
+               
             }
         ]
     },
     "func": {
         "nome": "Funções",
-        "page_max": 2,
+        "page_max": 4,
         "pages": [
             {
                 "color": "0x00ff00",
                 "author": {
-                    "name": "Estudo de Funções - Pg 1 de 2"
+                    "name": "Funções - Pg 1 de 4"
                 },
                 "fields": [
-                    { "name": "Tópico", "value": "Valor do Campo" }
-                ],
-                "footer": {
-                    "text": "Mensagem no fim da página"
-                }
+                    { "name": "\u200B", "value": "A computação é uma ciência que surgiu com grandes influencias da matemática, e por isso vários conceitos da computação estão ligados a conceitos matemáticos, as funções se enquadram nessa situação. \n Na programação, funções são códigos que executam determinadas tarefas, vamos observar o exemplo a seguir: \n\n >>> type(43) \n <class 'int'>" }
+                ]
+        
             },
             {
                 "color": "0x00ff00",
                 "author": {
-                    "name": "Estudo de Funções - Pg 2 de 2"
+                    "name": "Funções - Pg 2 de 4"
                 },
                 "fields": [
-                    { "name": "\u200B", "value": "Valor do Campo com tópico vazio `(O mesmo vale para o campo value)`" }
-                ],
-                "footer": {
-                    "text": "Mensagem no fim da página"
-                }
-            }
-        ]
-    },
-    "obj": {
-        "nome": "Objetos",
-        "page_max": 3,
-        "pages": [
-            {
-                "color": "0x00ff00",
-                "author": {
-                    "name": "Estudo de Objetos - Pg 1 de 3"
-                },
-                "fields": [
-                    { "name": "Tópico", "value": "Valor do Campo" }
-                ],
-                "footer": {
-                    "text": "Mensagem no fim da página"
-                }
+                    { "name": "\u200B", "value": "Na situação da página anterior temos uma função chamada type, uma função do próprio python que tem como objetivo verificar o tipo de dado que é passado como argumento para ela, tudo que está dentro do parênteses é chamado de argumento da função, as funções pegam os argumentos e retornam algum resultado, a função type retorna os tipo de dados que no caso é um inteiro." }
+                ]
+                
             },
             {
                 "color": "0x00ff00",
                 "author": {
-                    "name": "Estudo de Objetos - Pg 2 de 3"
+                    "name": "Funções - Pg 3 de 4"
                 },
                 "fields": [
-                    { "name": "\u200B", "value": "Valor do Campo com tópico vazio `(O mesmo vale para o campo value)`" }
-                ],
-                "footer": {
-                    "text": "Mensagem no fim da página"
-                }
+                    { "name": "\u200B", "value": "O Python possui inúmeras funções, mas você como um bom programador pode e deve criar suas próprias funções, como no exemplo a seguir: \n\n def mensagem(nome): \n \t print('Bom dia', nome) \n mensagem('carla') " }
+                ]
+                
             },
             {
                 "color": "0x00ff00",
                 "author": {
-                    "name": "Estudo de Objetos - Pg 3 de 3"
+                    "name": "Funções - Pg 4 de 4"
                 },
                 "fields": [
-                    { "name": "Listagem sem criar vários Tópicos", "value": "🍑Pêssego\n\n🍎Maçã\n\n🍈Melância\n\n🍍Abacaxi" }
-                ],
-                "footer": {
-                    "text": "Mensagem no fim da página"
-                }
+                    { "name": "\u200B", "value": "A palavra def é reservada no python para definir funções, o nome que demos para essa função é mensagem, e essa função recebe nomes, note os dois pontos (:) que foram utilizados, ele indica que todo código identado nas linhas abaixo faz parte daquela função, na terceira linha estamos chamando a função mensagem e passando o parâmetro carla para ela, o objetivo, ou resultado desta função é mostrar na tela um Bom dia com o nome que quisermos, por isso teremos o seguinte retorno para essa situação: \n\n Bom dia, carla" }
+                ]
             }
         ]
     }

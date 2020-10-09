@@ -17,6 +17,7 @@ const { sendEmbed } = require('./src/utils/default-embeder');
 const QuizzController = require('./src/controllers/quizz.controller.js');
 const LivroController = require('./src/controllers/livro.controller.js');
 const livro = require('./src/assets/livro.json');
+
 bot.quizz = {};
 
 
@@ -66,7 +67,8 @@ bot.on('message', msg => { // Evento dispara sempre que alguém manda uma mensag
                 // PODEMOS FAZER O REPLACE PARA ACEITAR VALORES ALÉM DAS CHAVES DO OBJETO LIVRO
                 let topico = args[1].toLowerCase().replace(/variavel|variável+/g, 'var')
                     .replace(/funcao|funçao|função+/g, 'func')
-                    .replace(/objeto+/g, 'obj');
+                    .replace(/intro|introduc|introdução+/g, 'introducao')
+                    .replace(/dado|dados+/g, 'dados');
                 
                 if (!topicosValidos.includes(topico)) 
                     sendEmbed(msg, 'ERROR', 'Campo Faltando', [
