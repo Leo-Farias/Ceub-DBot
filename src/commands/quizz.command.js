@@ -2,7 +2,6 @@ const QuizzController = require('../controllers/quizz.controller.js');
 const PREFIX = process.env.PREFIX;
 const TopicoController = require('../controllers/topico.controller.js');
 const DificuldadeController = require('../controllers/dificuldade.controller.js');
-const commandParser = require('../utils/commandParser')
 
 const executarQuizz = (msg, bot) => {
     if(!bot.quizz[msg.channel.id]) {
