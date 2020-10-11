@@ -1,6 +1,7 @@
-const commandParser = require('../utils/commandParser')
-const runCode = require('../utils/codeRunner')
-const codeExtractor = require('../utils/codeExtractor')
+const commandParser = require('../utils/commandParser');
+const runCode = require('../utils/codeRunner');
+const codeExtractor = require('../utils/codeExtractor');
+const PREFIX = process.env.PREFIX;
 
 const logInfo = (msg) => {
     console.log(`INFOS:
@@ -36,7 +37,10 @@ function runCommand(msg){
 
 
 module.exports = {
-    name: 'code',
-	description: 'Run Code from Discord text',
+	name: 'code',
+	description: {
+		title: `:wrench:  ${PREFIX}code run \`\`\` {código} \`\`\`  :wrench: `,
+		content: `Permite executar códigos em python, o resultado do código é gerado em outra mensagem se possível.\n\n**Exemplo**: ${PREFIX}code run \n\`\`\` print("hello world") \n\`\`\``
+	},
 	execute: runCommand
 }

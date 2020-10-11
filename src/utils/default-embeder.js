@@ -27,7 +27,7 @@ const sendEmbed = (msg, type, title, fields) => {
             break;
     }
     const file = new MessageAttachment(file_path);
-    const errorEmbed = {
+    const msgEmbed = {
         color: hex_color,
         author: {
             name: title,
@@ -36,7 +36,7 @@ const sendEmbed = (msg, type, title, fields) => {
         fields: fields
     };
     
-    msg.channel.send({ files: [file], embed: errorEmbed });
+    msg.channel.send({ files: [file], embed: msgEmbed });
 }
 
 

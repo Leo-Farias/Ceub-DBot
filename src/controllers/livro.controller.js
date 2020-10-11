@@ -11,7 +11,11 @@ const sendPagina = (msg, paginas, paginaIndex) => {
     
             if (r.emoji.name === '▶️' && paginaIndex < paginas.length) paginaIndex++;
             else if (r.emoji.name === '◀️' && paginaIndex !== 1) paginaIndex--;
-    
+            
+            message.reactions.removeAll().catch(error => console.error('Falha ao remover reacões: ', error));
+            message.react('◀️');
+            message.react('▶️');
+
             message.edit({ embed: paginas[paginaIndex - 1] });
         })
     });

@@ -1,15 +1,30 @@
-function help(msg, bot){
-	helpMessage = '-=-=-= Menu =-=-=- (REFAZER)\n'
-	bot.commands.forEach((command) => {
-		helpMessage += `${command.name}: ${command.description}\n`
-	})
-	return msg.channel.send(helpMessage) 
+const PREFIX = process.env.PREFIX;
+
+function ajuda(msg, bot){
+	let manualEmbed = {
+        color: 0x33ffe3,
+        author: {
+            name: '📚  Manual de Uso do LeFiF  📚',
+		},
+		fields: []
+	};
+	
+	bot.commands.forEach( command => {
+		manualEmbed.fields.push({ name: command.description.title, value: command.description.content });
+		manualEmbed.fields.push({ name: '\u200B', value: '\u200B' });
+	});
+	manualEmbed.fields.pop();
+
+	msg.channel.send({ embed: manualEmbed }); 
 }
 
 module.exports = {
-	name: 'help',
-	description: 'Auxilio Emergencial',
-	execute: help
+	name: 'ajuda',
+	description: {
+		title: `⚙️  ${PREFIX}ajuda  ⚙️`,
+		content: 'Comando para exibir manual de uso do LeFiF. '
+	},
+	execute: ajuda
 }
 /*
 	{

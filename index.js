@@ -15,8 +15,9 @@ const { sendEmbed } = require('./src/utils/default-embeder');
 
 //const joinEvent = require('./src/events/join.event') 
 bot.on('ready', () => {
+    bot.quizz = {};
     console.log("=== BOT INICIADO ===");
-    console.log("ENV:" ,ENV, "\nPREFIX:", PREFIX, "\n\n\n")
+    console.log("ENV:" ,ENV, "\nPREFIX:", PREFIX, "\n\n\n");
 })
 
 
@@ -42,7 +43,7 @@ bot.on('message', msg => { // Evento dispara sempre que alguém manda uma mensag
 });
 
 
-bot.commands = new Discord.Collection()
+bot.commands = new Discord.Collection();
 const commandFiles = fs.readdirSync('./src/commands').filter(file => file.endsWith('.command.js'));
 for (const file of commandFiles) {
     console.log("Importing file:", file)

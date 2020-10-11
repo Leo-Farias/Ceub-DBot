@@ -1,15 +1,17 @@
-const validarTopico = (livro, topico_para_validar) => {
+const validarTopico = (livro, topico_usuario) => {
     // OBTENDO TOPICOS VALIDOS PADRÃO.
     let topicosValidos = [];
     for (let topico in livro)
         topicosValidos.push(topico);
+    
+    return topicosValidos.includes(topico_usuario);
+}
 
+const obterSmartTopico = (topico) => {
     // PODEMOS FAZER O REPLACE PARA ACEITAR VALORES ALÉM DAS CHAVES DO OBJETO LIVRO
-    let topico = topico_para_validar.toLowerCase().replace(/variavel|variável+/g, 'var')
+    return topico.toLowerCase().replace(/variavel|variável+/g, 'var')
         .replace(/funcao|funçao|função+/g, 'func')
         .replace(/objeto+/g, 'obj');
-    
-    return topicosValidos.includes(topico);
 }
 
 const obterTopicoInvalidoFromArray = (livro, topicos) => {
@@ -26,4 +28,4 @@ const obterTopicoInvalidoFromArray = (livro, topicos) => {
     return index_topico_invalido;
 }
 
-module.exports = { validarTopico, obterTopicoInvalidoFromArray };
+module.exports = { validarTopico, obterTopicoInvalidoFromArray, obterSmartTopico };

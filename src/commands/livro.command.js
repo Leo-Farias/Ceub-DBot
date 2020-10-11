@@ -1,4 +1,5 @@
 const livro = require('../assets/livro.json');
+const PREFIX = process.env.PREFIX;
 
 const sendLivro = (msg) => {
     let livroEmbed = {
@@ -31,6 +32,9 @@ const sendLivro = (msg) => {
 
 module.exports = {
 	name: 'livro',
-	description: 'Mostra o livro aos usuarios',
+	description: {
+		title: `📕  ${PREFIX}livro  📕`,
+		content: `Consulta os arquivos do sistema e traz uma lista dos tópicos para treinamento de agentes e mostra o progresso em cada um deles.\n\n**Exemplo**: \`${PREFIX}livro\``
+	},
 	execute: sendLivro
 }

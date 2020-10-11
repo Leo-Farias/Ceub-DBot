@@ -15,6 +15,11 @@ const executarQuizz = (msg, bot) => {
 
 module.exports = {
 	name: 'quizz',
-	description: 'Iniciar o quizz.',
+	description: {
+		title: `📝  ${PREFIX}quizz {topico(opcional, vários)}  📝`,
+        content: 'Inicia um quizz com perguntas baseadas no tópico (se fornecido) e no nível do jogador. ' + 
+        'As perguntas são divididas em:\n -\`Dificuldade\`\n-\`Topico\`\n-\`Pontuação\`\n-\`Tempo de Execução\`\n' +
+        `Todas as perguntas são de múltipla escolha, **só é considerada a primeira escolha selecionada**. \n\n**Exemplo**: \`${PREFIX}quizz variavel função objeto\``
+	},
 	execute: executarQuizz
 };
