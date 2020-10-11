@@ -94,11 +94,10 @@ const handlePergunta = (pergunta, INDEX_PERGUNTA, num_perguntas, tempo) => {
     return [perguntaEmbed, ALT_CORRETA_POS, file];
 }
 
-const handleQuizz = (msg, bot, perguntas, num_perguntas, alternativas, pContador) => {
+const handleQuizz = (msg, bot, perguntas, num_perguntas, alternativas, pContador, quizzData = []) => {
 
     const medalhas = ['🥇', '🥈', '🥉'];
-    const tempo_pergunta = perguntas[0].time;
-    const ponto_total = perguntas[0].pontos;
+    const { tempo: tempo_pergunta, pontos: ponto_total, topico } = perguntas[0];
     let [embed, alt_correta, pergunta_icon] = handlePergunta(perguntas[0], pContador+1, num_perguntas, tempo_pergunta);
     let participantes = [];
     let vencedores = [];
@@ -111,16 +110,16 @@ const handleQuizz = (msg, bot, perguntas, num_perguntas, alternativas, pContador
 
         const msgReaction = message.createReactionCollector(filter, { time: tempo_pergunta }); // Se quiser mudar o tempo alterar time
 
-        let cronometro = setTimeout(() => { // Criar cronometro para executar metade do tempo antes da pergunta finalizar.
+        let cronometro = setTimeout(() => { // Criar cronômetro para executar metade do tempo antes da pergunta finalizar.
             sendEmbed(msg, 'ALERT', 'Tempo Acabando', [{name: '\u200B',value: `**Faltam ${Math.round((tempo_pergunta/1000)/2)} segundos.**`}])
         }, tempo_pergunta/2);
 
         msgReaction.on('collect', (r, { id: idParticipante }) => {
 
             participantes.push(idParticipante); // Adicionando participante na lista para filtrar
+            let pontos = 0;
 
-            if(r.emoji.name === alternativas[alt_correta]) {
-                let pontos = 0;
+            if(r.emoji.name === alternativas[alt_correta]) {    
                 switch (vencedores.length) {
                     case 0: // 1° Lugar
                         pontos = ponto_total;
@@ -137,7 +136,12 @@ const handleQuizz = (msg, bot, perguntas, num_perguntas, alternativas, pContador
                 }
                 vencedores.push({ id: idParticipante, pontos: pontos });
             }
-        })
+            // INSERINDO INFORMAÇÕES NO QUIZZDATA
+            idIndex = quizzData.findIndex(d => d.id === idParticipante);
+            if (idIndex < 0) quizzData.push({ id: idParticipante, pontos });
+            else quizzData[idIndex].pontos += pontos;
+            
+        });
 
         msgReaction.on('end', collected => {
             // Limpando cronometro ( já que a pergunta foi respondida não tem razão para mandar o alerta ).
@@ -147,23 +151,32 @@ const handleQuizz = (msg, bot, perguntas, num_perguntas, alternativas, pContador
 
             
             if (vencedores.length > 0) 
-                sendEmbed(msg, 'CORRECT', 'Tempo Esgotado', 
+                sendEmbed(msg, 'CORRECT', 'Resultado Pergunta:', 
                     [
                         { name: 'Vencedores', value: vencedores.map( (v, index) => index <= 2 ? `${medalhas[index]} <@${v.id}>` : `${index + 1}° <@${v.id}>`).join('\n'), inline: true },
                         { name: 'Pontuação', value: vencedores.map( v => v.pontos ).join('\n'), inline: true }
                     ]);
             else
-                sendEmbed(msg, 'ERROR', 'Tempo Esgotado', [
+                sendEmbed(msg, 'ERROR', 'Resultado Pergunta:', [
                     { name: '\u200B', value: '**Ninguém acertou a pergunta**' }]);
             
-            
-            sendEmbed(msg, 'LOAD', 'Processando Informações', [
-                { name: '\u200B', value: vencedores.length > 0 
-                ? 'Parabéns à todos que acertaram! Vocês podem buscar esclarecimentos no tópico x do livro.' 
-                : 'Droga! Parece que vocês não conseguiram quebrar essa barreira...\n' + 
-                'Mas não se desanimem! \n\n🌐 **Eu fiz uma análise rápida da pergunta...** 🌐\n\n 📄 Os dados indicam que essa era uma pergunta do tipo **x**! 📄 \n\nTenho certeza que vocês poderão responder corretamente se melhorarem seus conhecimentos.' },
-                { name: '\u200B', value: !perguntas[0] || collected.size === 0 ? 'Gerando arquivos finais...' : 'Retomando processo de quebra de barreiras... Carregando próxima pergunta.' }
-            ]);
+            setTimeout( () => {
+                quizzData.sort((dAtual, dProximo) => dProximo.pontos - dAtual.pontos); // ORDENANDO EM ORDEM CRESCENTE
+                sendEmbed(msg, 'LOAD', 'Placar Quizz:', [
+                    { name: 'Vencedores', value: quizzData.map( (v, index) => index <= 2 ? `${medalhas[index]} <@${v.id}>` : `${index + 1}° <@${v.id}>`).join('\n'), inline: true },
+                    { name: 'Pontuação', value: quizzData.map( v => v.pontos ).join('\n'), inline: true }
+                ]);
+            }, 3000);        
+
+            setTimeout( () => {
+                sendEmbed(msg, 'LOAD', 'Processando Informações: ', [
+                    { name: '\u200B', value: vencedores.length > 0 
+                    ? `Parabéns à todos que acertaram! Vocês podem buscar esclarecimentos no tópico **${topico}** do livro.` 
+                    : 'Droga! Parece que nenhum de vocês conseguiu quebrar essa barreira...\n' + 
+                    `Mas não se desanimem! 📄 Parece que essa era uma pergunta do tipo **${topico}**! 📄 \n\nTenho certeza que vocês responder corretamente se melhorarem seus conhecimentos.` },
+                    { name: '\u200B', value: !perguntas[0] || collected.size === 0 ? 'Gerando arquivos finais...' : 'Retomando processo de quebra de barreiras... Carregando próxima pergunta.' }
+                ]);
+            }, 7000);
 
             // Espera X segundos até carregar outra pergunta
             setTimeout(function() {
@@ -179,8 +192,8 @@ const handleQuizz = (msg, bot, perguntas, num_perguntas, alternativas, pContador
                     bot.quizz[msg.channel.id] = false; // Setando quizz como false possibilitando o início de outro quizz.
                 }
                 else
-                    handleQuizz(msg, bot, perguntas, num_perguntas, alternativas, ++pContador);
-            }, 5000);
+                    handleQuizz(msg, bot, perguntas, num_perguntas, alternativas, ++pContador, quizzData);
+            }, 12000);
         });
     });
 }
