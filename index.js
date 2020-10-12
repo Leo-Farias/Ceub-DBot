@@ -1,5 +1,6 @@
 require('dotenv').config()
 const fs = require('fs')
+const path = require('path')
 // Instanciando o bot.
 const Discord = require('discord.js');
 const bot = new Discord.Client();
@@ -8,6 +9,8 @@ const bot = new Discord.Client();
 const token = process.env.API_TOKEN
 const PREFIX = process.env.PREFIX
 const ENV = process.env.ENV
+process.env.TMP_DIR = path.resolve(__dirname, 'src', 'tmp')
+process.env.CHALLENGES_DIR = path.resolve(__dirname, 'src', 'challenges')
 
 // Obtendo demais recursos do projeto.
 const { genLetterAsEmoji } = require('./src/utils/emoji-letters.js');
@@ -21,7 +24,11 @@ bot.on('ready', () => {
 
 
 bot.on('message', msg => { // Evento dispara sempre que alguém manda uma mensagem.
-    if ((!msg.author.bot) && (/windows|Windows|WINDOWS/.test(msg.content))) msg.channel.send(`Linux > Windows`)
+    if ((!msg.author.bot) && (/windows/i.test(msg.content))){
+        sendEmbed(msg, 'ERROR', 'ERRO 417: EXPECTATION FAILED', [
+            { name:'\u200B', value: `LINUX > WINDOWS` }
+        ])
+    }
 
     // Filtra mensagens de bot
     if (msg.author.bot) return
@@ -30,15 +37,17 @@ bot.on('message', msg => { // Evento dispara sempre que alguém manda uma mensag
     
     // Separação de argumentos para comandos com mais opções. $escolher 1 => args[0] escolher, args[1] => 1
     let args = msg.content.substring(PREFIX.length).split(" ");    
-    try{
-        bot.commands.get(args[0]).execute(msg, bot);
-    } catch(err) {
-        console.log(err);
+    
+    // Tratamento de comandos
+    let command = bot.commands.get(args[0])
+    if(!command){
         sendEmbed(msg, 'ALERT', 'ERRO 404: COMANDO NÃO ENCONTRADO.', [
             { name:'\u200B', value: `Não foi possível encontrar o comando \`${args[0]}\` na base de dados.` }
         ])
         console.log("NO OPTION FOR: '" + msg.content + "'");
+        return
     }
+    return command.execute(msg, bot);
 });
 
 

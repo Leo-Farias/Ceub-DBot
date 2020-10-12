@@ -1,3 +1,5 @@
+const { sendEmbed } = require('../default-embeder')
+
 const codeExtract = (msg) => {
     const code = msg.content
     console.log("CODE:", code)
@@ -13,18 +15,20 @@ const codeExtract = (msg) => {
         console.log("MATCH (`)")
         return code.match(regexLineCode)[1]
     } else {
-        console.log("NO MATCH FOR CODE!!")
-        const badFormat = `Codigo mal formatado. Use:
-        \`print("Hello World")\`
-        ou
-        \`\`\`
+        console.log("BAD CODE FORMAT EXCEPTION")
+        const badFormat = `Codigo mal formatado.
+        Use:
+        \n
+        code run \\\`print("Hello World")\\\`
+        \n
+        code run
+        \\\`\\\`\\\`
         print("Hello World")
-        \`\`\``
-        return badFormat
+        \\\`\\\`\\\``
+        sendEmbed(msg, 'ALERT', 'ERROR 400: Bad Code Format',
+        { name: '\u200B', value: badFormat})
+        return
     }
-    
-    //console.log("FORMATED CODE:", codeFormated)
-    return codeFormated
 }
 
 

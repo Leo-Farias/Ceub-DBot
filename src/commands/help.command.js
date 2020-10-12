@@ -1,5 +1,5 @@
 function help(msg, bot){
-	helpMessage = '-=-=-= Menu =-=-=- (REFAZER)\n'
+	let helpMessage = '-=-=-= Menu =-=-=- (REFAZER)\n'
 	bot.commands.forEach((command) => {
 		helpMessage += `${command.name}: ${command.description}\n`
 	})

@@ -2,7 +2,7 @@
   "dependencies": {
     "discord.js": "^12.3.1",
     "dotenv": "^8.2.0",
-    "knex": "^0.21.5",
+    "knex": "^0.21.6",
     "mysql2": "^2.2.5",
     "pg": "^8.4.0",
     "shelljs": "^0.8.4"
@@ -12,21 +12,24 @@
     "start": "node ./index.js",
     "dev": "nodemon --exec babel-node ./index.js",
     "knex:migrate": "knex migrate:latest",
-    "knex:rollback": "knex --knexfile knexfile.js migrate:rollback"
+    "knex:rollback": "knex --knexfile knexfile.js migrate:rollback",
+    "licenses": "npx license-ls --format=json"
   },
   "devDependencies": {
-    "nodemon": "^2.0.4",
     "@babel/cli": "^7.10.1",
     "@babel/core": "^7.10.2",
     "@babel/node": "^7.10.1",
+    "@babel/plugin-transform-async-to-generator": "^7.10.4",
     "@babel/preset-env": "^7.10.2",
-    "babel-plugin-module-resolver": "^4.0.0"
+    "babel-plugin-module-resolver": "^4.0.0",
+    "license-ls": "^1.5.0",
+    "nodemon": "^2.0.4"
   },
   "nodemonConfig": {
     "ignore": [
       "node_modules",
       "*.json"
     ],
-    "delay": "2500"
+    "delay": "500"
   }
 }

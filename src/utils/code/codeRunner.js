@@ -1,11 +1,9 @@
 const fs = require('fs')
-const path = require('path')
 var shell = require('shelljs')
 
 const runCode = (code, interpreter = 'python') => {
     const fileName = String(Math.random() * 100000000).slice(0, 8) + '.py'
-    const filePath = path.resolve(__dirname, '..', 'tmp')
-    const fileFullPath = filePath + '/' + fileName
+    const fileFullPath = process.env.TMP_DIR  + '/' + fileName
 
     const encondedCode = "# -*- coding: utf-8 -*-\n" + code
     return new Promise((resolve, reject) => {
@@ -18,6 +16,8 @@ const runCode = (code, interpreter = 'python') => {
                 
                 if(commandReturn.stdout) resolve(commandReturn.stdout)
                 else {
+                    //fileRegexMatch = commandReturn.stderr.match(/File "(\/[a-z]*|[0-9]*)*.py", /)
+                    //console.log(fileRegexMatch)
                     reject(commandReturn.stderr)
                 }
             } catch (err) {
