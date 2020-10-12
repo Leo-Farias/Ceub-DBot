@@ -36,7 +36,7 @@ bot.on('message', msg => { // Evento dispara sempre que alguém manda uma mensag
         bot.commands.get(args[0]).execute(msg, bot);
     } catch(err) {
         sendEmbed(msg, 'ALERT', 'ERRO 404: COMANDO NÃO ENCONTRADO.', [
-            { name:'\u200B', value: `Não foi possível encontrar o comando \`${args[0]}\` na base de dados.\nDigite **!ajuda** para obter uma lista de comandos.` }
+            { name:'\u200B', value: `Não foi possível encontrar o comando \`${args[0]}\` na base de dados.\nDigite **${PREFIX}ajuda** para obter uma lista de comandos.` }
         ])
         console.log("NO OPTION FOR: '" + msg.content + "'");
     }
