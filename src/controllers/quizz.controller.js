@@ -137,7 +137,7 @@ const handleQuizz = (msg, bot, perguntas, num_perguntas, alternativas, pContador
                 vencedores.push({ id: idParticipante, pontos: pontos });
             }
             // INSERINDO INFORMAÇÕES NO QUIZZDATA
-            idIndex = quizzData.findIndex(d => d.id === idParticipante);
+            let idIndex = quizzData.findIndex(d => d.id === idParticipante);
             if (idIndex < 0) quizzData.push({ id: idParticipante, pontos });
             else quizzData[idIndex].pontos += pontos;
             
