@@ -15,7 +15,8 @@ const { sendEmbed } = require('./src/utils/default-embeder');
 
 //const joinEvent = require('./src/events/join.event') 
 bot.on('ready', () => {
-    bot.quizz = {};
+    bot.user.setActivity('!ajuda').catch(error => console.log(error));
+    bot.quizz = {}; 
     console.log("=== BOT INICIADO ===");
     console.log("ENV:" ,ENV, "\nPREFIX:", PREFIX, "\n\n\n");
 })
@@ -34,9 +35,8 @@ bot.on('message', msg => { // Evento dispara sempre que alguém manda uma mensag
     try{
         bot.commands.get(args[0]).execute(msg, bot);
     } catch(err) {
-        console.log(err);
         sendEmbed(msg, 'ALERT', 'ERRO 404: COMANDO NÃO ENCONTRADO.', [
-            { name:'\u200B', value: `Não foi possível encontrar o comando \`${args[0]}\` na base de dados.` }
+            { name:'\u200B', value: `Não foi possível encontrar o comando \`${args[0]}\` na base de dados.\nDigite **!ajuda** para obter uma lista de comandos.` }
         ])
         console.log("NO OPTION FOR: '" + msg.content + "'");
     }
