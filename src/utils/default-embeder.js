@@ -5,13 +5,21 @@ const sendEmbed = (msg, type, title, fields) => {
     let hex_color = 0x000000;
 
     switch(type) {
+        case 'QUIZZ':
+            file_path = './src/assets/quizzIcon.png';
+            hex_color = 0x4be08a;
+            break;
+        case 'TIME':
+            file_path = './src/assets/time.png';
+            hex_color = 0xffe351;
+            break;
         case 'LOAD':
             file_path = './src/assets/load.png';
             hex_color = 0x33ffe3;
             break;
         case 'ERROR':
             file_path = './src/assets/error.png';
-            hex_color = 0xad0000;
+            hex_color = 0xc62d2d;
             break;
         case 'ALERT':
             file_path = './src/assets/alert.png';
@@ -26,6 +34,7 @@ const sendEmbed = (msg, type, title, fields) => {
             hex_color = 0xad0000;
             break;
     }
+
     const file = new MessageAttachment(file_path);
     const msgEmbed = {
         color: hex_color,

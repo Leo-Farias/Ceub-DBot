@@ -111,7 +111,7 @@ const handleQuizz = (msg, bot, perguntas, num_perguntas, alternativas, pContador
         const msgReaction = message.createReactionCollector(filter, { time: tempo_pergunta }); // Se quiser mudar o tempo alterar time
 
         let cronometro = setTimeout(() => { // Criar cronômetro para executar metade do tempo antes da pergunta finalizar.
-            sendEmbed(msg, 'ALERT', 'Tempo Acabando', [{name: '\u200B',value: `**Faltam ${Math.round((tempo_pergunta/1000)/2)} segundos.**`}])
+            sendEmbed(msg, 'TIME', 'Tempo Acabando', [{name: '\u200B',value: `**Faltam ${Math.round((tempo_pergunta/1000)/2)} segundos.**`}])
         }, tempo_pergunta/2);
 
         msgReaction.on('collect', (r, { id: idParticipante }) => {
@@ -160,13 +160,14 @@ const handleQuizz = (msg, bot, perguntas, num_perguntas, alternativas, pContador
                 sendEmbed(msg, 'ERROR', 'Resultado Pergunta:', [
                     { name: '\u200B', value: '**Ninguém acertou a pergunta**' }]);
             
-            setTimeout( () => {
-                quizzData.sort((dAtual, dProximo) => dProximo.pontos - dAtual.pontos); // ORDENANDO EM ORDEM CRESCENTE
-                sendEmbed(msg, 'LOAD', 'Placar Quizz:', [
-                    { name: 'Vencedores', value: quizzData.map( (v, index) => index <= 2 ? `${medalhas[index]} <@${v.id}>` : `${index + 1}° <@${v.id}>`).join('\n'), inline: true },
-                    { name: 'Pontuação', value: quizzData.map( v => v.pontos ).join('\n'), inline: true }
-                ]);
-            }, 3000);        
+            if (quizzData.length > 0 )
+                setTimeout( () => {
+                    quizzData.sort((dAtual, dProximo) => dProximo.pontos - dAtual.pontos); // ORDENANDO EM ORDEM CRESCENTE
+                    sendEmbed(msg, 'QUIZZ', 'Placar Quizz:', [
+                        { name: 'Vencedores', value: quizzData.map( (v, index) => index <= 2 ? `${medalhas[index]} <@${v.id}>` : `${index + 1}° <@${v.id}>`).join('\n'), inline: true },
+                        { name: 'Pontuação', value: quizzData.map( v => v.pontos ).join('\n'), inline: true }
+                    ]);
+                }, 3000);        
 
             setTimeout( () => {
                 sendEmbed(msg, 'LOAD', 'Processando Informações: ', [
