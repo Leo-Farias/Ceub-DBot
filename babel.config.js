@@ -10,6 +10,7 @@ module.exports = {
       ]
     ],
     plugins: [
+      "@babel/plugin-transform-async-to-generator",
       ['module-resolver', {
         alias: {
           '@commands': './src/commands',

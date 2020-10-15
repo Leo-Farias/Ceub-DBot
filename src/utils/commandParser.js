@@ -1,6 +1,13 @@
 const PREFIX = process.env.PREFIX
 
-const commandParser = (content, returnType = 'Object') => {
+const commandParser = (msg, returnType = 'Object') => {
+    var content
+    try {
+        content = msg.content
+    } catch ( err ) {
+        content = msg
+    }
+    
     const firstLine = content.split('\n')[0]
     var args = firstLine.slice(1, firstLine.length).split(" ")
     const commandInput = content.slice(PREFIX.length + firstLine.length).trim()
@@ -16,7 +23,7 @@ const commandParser = (content, returnType = 'Object') => {
     else return {
         prefix: PREFIX,
         commands: args,
-        code: commandInput
+        code: false
     }
 }
 

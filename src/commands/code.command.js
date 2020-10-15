@@ -1,27 +1,15 @@
-const commandParser = require('../utils/commandParser');
-const runCode = require('../utils/codeRunner');
-const codeExtractor = require('../utils/codeExtractor');
-const PREFIX = process.env.PREFIX;
-
-const logInfo = (msg) => {
-    console.log(`INFOS:
-    USUARIO: ${msg.author.username}
-    USER_ID: ${msg.author.id}
-    MENSAGEM_ID: ${msg.id}
-    CONTEUDO: ${msg.content}
-    ESTRUTURA_COMANDO: ${commandParser(msg.content, 'List')}
-    `)
-}
+const commandParser = require('../utils/commandParser')
+const runCode = require('../utils/code/codeRunner')
+const codeExtractor = require('../utils/code/codeExtractor')
+const logInfo = require('../utils/log/logCommandInfo')
 
 function runCommand(msg){
-    const userCommand = commandParser(msg.content)
     logInfo(msg)
-    console.log(userCommand.parameter)
 
     const code = codeExtractor(msg)
+    if( !code ) return
     runCode(code)
         .then((result) => {
-            console.log("Result:", result)
             return msg.channel.send(`OUTPUT: \n\`\`\`\n${result}\n\`\`\``)
         })
         .catch((e) => {
