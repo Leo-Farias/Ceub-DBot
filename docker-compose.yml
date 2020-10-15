@@ -17,9 +17,9 @@ services:
   #    POSTGRES_DB: discord_dev
   #    LANG: en_US.utf8
   bot:
-    build: .
+    build: ./Ceub-DBot
     volumes: 
-      - .:/opt/
+      - ./Ceub-DBot:/opt/
     working_dir: /opt/Ceub-DBot
     environment:
       ENV: development
