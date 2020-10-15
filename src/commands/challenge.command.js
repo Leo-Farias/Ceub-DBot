@@ -1,15 +1,22 @@
 const commandParser = require('../utils/commandParser')
-const runCode = require('../utils/code/codeRunner')
+const runTest = require('../utils/code/testRunner')
 const codeExtractor = require('../utils/code/codeExtractor')
 const logInfo = require('../utils/log/logCommandInfo')
 const { sendEmbed } = require('../utils/default-embeder')
 
+/*
+&desafio submit
+```
+def soma(numeros):
+  assert numeros[0] + numeros[1]
+```
+*/
 function submit(msg){
     const code = codeExtractor(msg)
     if( !code ) return
-    runCode(code, pytest)
+    runTest(code, 'pytest')
     .then((result) => {
-        return msg.channel.send("Entregar desafio")
+        //return msg.channel.send("Entregar desafio")
         return msg.channel.send(`OUTPUT: \n\`\`\`\n${result}\n\`\`\``)
     })
     .catch((e) => {
@@ -31,7 +38,7 @@ function challenge(msg) {
             return msg.channel.send("Menu de ajuda do desafio")
             break;
         case 'submit':
-            submit(msg)
+            return submit(msg)
             break;
         case 'cancel':
             return msg.channel.send("Cancelar desafio ativo...")
