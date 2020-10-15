@@ -23,7 +23,7 @@ function runCommand(msg){
 
 
 
-
+const PREFIX = process.env.PREFIX
 module.exports = {
 	name: 'code',
 	description: {
