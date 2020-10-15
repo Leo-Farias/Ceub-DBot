@@ -7,7 +7,7 @@ const sendLivro = (msg) => {
         author: {
             name: "Livro de Estudos Python"
         },
-        description: "Livro para estudar os conceitos de programação da linguagem Python.",
+        description: "Livro para estudar os conceitos de programação da linguagem Python. \n\n Comandos: \n !ler introducao \n !ler var \n !ler dados \n !ler func",
         timestamp: new Date()
     };
     let nomeTopicos = [];
