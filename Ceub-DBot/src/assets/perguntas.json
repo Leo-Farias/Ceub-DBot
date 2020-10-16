@@ -51,7 +51,7 @@
             "print(sys.python.version())",
             "print(sys)"],
         "alternativaCorreta": "print(sys.version)",
-        "topico": "obj",
+        "topico": "func",
         "pontos": 30,
         "dificuldade": "hard_2",
         "tempo": 25000
@@ -64,7 +64,7 @@
             "print(now.strftime('Year-Month-Day')",
             "print(now('Y-m-d')"],
         "alternativaCorreta": "print(now.strftime('%Y-%m-%d'))",
-        "topico": "obj",
+        "topico": "func",
         "pontos": 80,
         "dificuldade": "hard_3",
         "tempo": 25000
@@ -94,6 +94,61 @@
         "topico": "var",
         "pontos": 50,
         "dificuldade": "medium_1",
+        "tempo": 25000
+    },
+    "8": {
+        "label": "Python é uma linguagem _______ o que facilita e deixa mais rápido a execução do código já escrito.",
+        "alternativas": ["compilada", 
+            "compilada e interpretada", 
+            "nova",
+            "feita em Java",
+            "de Baixo nível",
+            "de banco de dados"],
+        "alternativaCorreta": "interpretada",
+        "topico": "introducao",
+        "pontos": 20,
+        "dificuldade": "easy_1",
+        "tempo": 25000
+    },
+    "9": {
+        "label": "Para mostrar uma mensagem na tela com algum texto customizado utilizamos o comando: ",
+        "alternativas": ["sys.console.new", 
+            "console", 
+            "print.console",
+            "console.log",
+            "new Print",
+            "sys.writeLine"],
+        "alternativaCorreta": "print",
+        "topico": "introducao",
+        "pontos": 20,
+        "dificuldade": "easy_1",
+        "tempo": 25000
+    },
+    "10": {
+        "label": "Quando escrevemos o código `print('Hello World')` como o python reconhece o comando 'print'? ",
+        "alternativas": ["O interpretador busca na máquina o significado dessa instrução e a converte para um código executável em python.", 
+            "O interpretador busca em um servidor dos criadores do python o comando 'print' e executa na tela.", 
+            "Python é uma linguagem precompilada, ou seja, antes de executar o código todas as intruções já são conhecidas pelo programa.",
+            "O interpretador busca a instrução no seu compilador C e executa na máquina.",
+            "Assim como java o python possui uma máquina virtual que possui todas as suas intruções à serem confirmadas."],
+        "alternativaCorreta": "O interpretador busca na biblioteca do python o significado dessa instrução e a converte para um código executável na máquina.",
+        "topico": "introducao",
+        "pontos": 20,
+        "dificuldade": "medium_1",
+        "tempo": 25000
+    },
+    "11": {
+        "label": "Quando executados o código: \ntexto = 'Olá Mundo!'\nprint(texto)\nO que é exibido na tela?",
+        "alternativas": ["texto", 
+            "texto = 'Olá Mundo!'", 
+            "Error: Invalid Syntax",
+            "Ola",
+            "'texto'",
+            "Ola Mundo!"],
+        "alternativaCorreta": "Olá Mundo!",
+        "topico": "introducao",
+        "pontos": 20,
+        "dificuldade": "easy_2",
         "tempo": 25000
     }
 }
