@@ -171,11 +171,12 @@ const handleQuizz = (msg, bot, perguntas, num_perguntas, alternativas, pContador
 
             setTimeout( () => {
                 sendEmbed(msg, 'LOAD', 'Processando Informações: ', [
+                    { name: '\u200B', value: `**ALTERNATIVA CORRETA**: ${alternativas[alt_correta]}`},
                     { name: '\u200B', value: vencedores.length > 0 
                     ? `Parabéns à todos que acertaram! Vocês podem buscar esclarecimentos no tópico **${topico}** do livro.` 
                     : 'Droga! Parece que nenhum de vocês conseguiu quebrar essa barreira...\n' + 
                     `Mas não se desanimem! 📄 Parece que essa era uma pergunta do tipo **${topico}**! 📄 \n\nTenho certeza que vocês responder corretamente se melhorarem seus conhecimentos.` },
-                    { name: '\u200B', value: !perguntas[0] || collected.size === 0 ? 'Gerando arquivos finais...' : 'Retomando processo de quebra de barreiras... Carregando próxima pergunta.' }
+                    { name: '\u200B', value: !perguntas[0] || collected.size === 0 ? 'Gerando arquivos finais...' : 'Retomando processo de quebra de barreiras... **Carregando próxima pergunta**...' }
                 ]);
             }, 7000);
 
@@ -184,11 +185,26 @@ const handleQuizz = (msg, bot, perguntas, num_perguntas, alternativas, pContador
                 // Se não tiver próxima pergunta então quizz foi finalizado.
                 // Ou se ninguém responder nenhuma alternativa.
                 if (!perguntas[0] || collected.size === 0) {
-                    collected.size === 0
-                    ? sendEmbed(msg, 'ERROR', 'Quizz Finalizado', [
-                        { name:'\u200B', value: '⏲️ **Inatividade** ⏲️'}])
-                    : sendEmbed(msg, 'CORRECT', 'Quizz Finalizado', [
-                        { name:'\u200B', value: '✅ Todas as Perguntas foram resolvidas. ✅'}]);
+                    let resultadoQuizzEmbed = [];
+                    if (quizzData.length === 0) resultadoQuizzEmbed = { name: 'Vencedor: ', value: 'Como nenhum participante repondeu ao quizz, **não foi possível definir o vencedor**' };
+                    else if (quizzData[0].pontos === 0 ) resultadoQuizzEmbed = { name: 'Vencedor: ', value: 'Como nenhum dos participantes acertou pelo menos uma pergunta, **não foi possível deifinir o vencedor**.' };
+                    else {
+                        let numVencedores = quizzData.reduce(
+                            (accumulator, currentValue) =>  {
+                                let addValue = currentValue.pontos === quizzData[0].pontos ? 1 : 0;
+                                return accumulator + addValue
+                        }, 0);
+                        if (numVencedores > 1) resultadoQuizzEmbed = { name: 'Vencedores: ', value: quizzData.filter( d => d.pontos === quizzData[0].pontos ).forEach(v => `<@${v.id}>`).join('\n') };
+                        else resultadoQuizzEmbed = { name: '\u200B', value: `**Vencedor: <@${quizzData[0].id}>` };
+                    }
+                    if (collected.size === 0) {
+                        sendEmbed(msg, 'WINNER', 'Quizz Finalizado', [
+                            { name:'\u200B', value: '**Motivo**: ⏲️ **Inatividade** ⏲️'}, resultadoQuizzEmbed]);
+                    }
+                    else {
+                        sendEmbed(msg, 'WINNER', 'Quizz Finalizado', [
+                            { name:'\u200B', value: '**Motivo**: ✅ Todas as Perguntas foram resolvidas. ✅'}, resultadoQuizzEmbed]);
+                    }
     
                     bot.quizz[msg.channel.id] = false; // Setando quizz como false possibilitando o início de outro quizz.
                 }

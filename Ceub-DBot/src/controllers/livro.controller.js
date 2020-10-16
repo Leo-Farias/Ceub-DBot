@@ -1,5 +1,8 @@
+const { MessageAttachment } = require('discord.js');
+
 const sendPagina = (msg, paginas, paginaIndex) => {
-    msg.channel.send({ embed: paginas[paginaIndex - 1] }).then( message => {
+    const file = new MessageAttachment('./src/assets/page.png');
+    msg.channel.send({ embed: paginas[paginaIndex - 1], files: [file] }).then( message => {
         message.react('◀️');
         message.react('▶️');
     
@@ -7,14 +10,13 @@ const sendPagina = (msg, paginas, paginaIndex) => {
     
         const msgReaction = message.createReactionCollector(filter, { time: 600000 });
     
-        msgReaction.on('collect', r => {
+        msgReaction.on('collect', (r, user) => {
     
             if (r.emoji.name === '▶️' && paginaIndex < paginas.length) paginaIndex++;
             else if (r.emoji.name === '◀️' && paginaIndex !== 1) paginaIndex--;
             
-            message.reactions.removeAll().catch(error => console.error('Falha ao remover reacões: ', error));
-            message.react('◀️');
-            message.react('▶️');
+            const userReactions = message.reactions.cache.filter(reaction => reaction.users.cache.has(user.id));
+            userReactions.forEach(reaction => reaction.users.remove(user.id));
 
             message.edit({ embed: paginas[paginaIndex - 1] });
         })

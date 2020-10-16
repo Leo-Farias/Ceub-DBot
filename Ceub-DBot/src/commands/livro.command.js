@@ -1,15 +1,19 @@
 const livro = require('../assets/livro.json');
+const { MessageAttachment } = require('discord.js');
 const PREFIX = process.env.PREFIX;
 
 const sendLivro = (msg) => {
     let livroEmbed = {
-        color: '0xf0ff00',
+        color: 0x34f6c3,
         author: {
-            name: "Livro de Estudos Python"
+            name: 'Livro de Estudos Python',
+            icon_url: 'attachment://book.png',
         },
         description: "Livro para estudar os conceitos de programação da linguagem Python. \n\n Comandos: \n !ler introducao \n !ler var \n !ler dados \n !ler func",
         timestamp: new Date()
     };
+    const file = new MessageAttachment('./src/assets/book.png');
+
     let nomeTopicos = [];
     let situacoesPag = [];
     for ( let topico in livro ) {
@@ -24,7 +28,7 @@ const sendLivro = (msg) => {
         { name: nomeTopicos.join('\n'), value: '\u200B', inline: true },
         { name: situacoesPag.join('\n'), value: '\u200B', inline: true }
     ]
-    msg.channel.send({ embed: livroEmbed });
+    msg.channel.send({ files: [file], embed: livroEmbed });
 }
 
 

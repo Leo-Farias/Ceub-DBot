@@ -13,6 +13,10 @@ const sendEmbed = (msg, type, title, fields) => {
             file_path = './src/assets/time.png';
             hex_color = 0xffe351;
             break;
+        case 'WINNER':
+            file_path = './src/assets/winner.png';
+            hex_color = 0xfabb00;
+            break;
         case 'LOAD':
             file_path = './src/assets/load.png';
             hex_color = 0x33ffe3;
@@ -40,7 +44,7 @@ const sendEmbed = (msg, type, title, fields) => {
         color: hex_color,
         author: {
             name: title,
-        icon_url: `attachment://${/\w+\.\w*/.exec(file_path)[0]}`,
+            icon_url: `attachment://${/\w+\.\w*/.exec(file_path)[0]}`,
         },
         fields: fields
     };
