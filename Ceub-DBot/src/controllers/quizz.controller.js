@@ -9,9 +9,11 @@ const { genLetterAsEmoji } = require('../utils/emoji-letters.js');
 const obterInfoQuizz = (msg, bot, args, TopicoController, DificuldadeController, level) => {
     let topico_list = [];
     let invalido_at = null;
-    if (args[1]) {
+    if (args[0] !== 'quizz' || args[1]) {
         // RETIRANDO TÓPICOS DO COMANDO, ARGS[0] É O INÍCIO DO COMANDO POR ISSO É FILTRADO.
-        topico_list = args.filter( (_, index) => index !== 0);
+        topico_list = args.filter( topico => topico !== 'quizz');
+        topico_list = topico_list.map( topico => TopicoController.obterSmartTopico(topico));
+        
         // OBTENDO POSIÇÃO DE POSSÍVEL TÓPICO INVÁLIDO
         invalido_at = TopicoController.obterTopicoInvalidoFromArray(livro, topico_list);
 
@@ -94,7 +96,7 @@ const handlePergunta = (pergunta, INDEX_PERGUNTA, num_perguntas, tempo) => {
     return [perguntaEmbed, ALT_CORRETA_POS, file];
 }
 
-const handleQuizz = (msg, bot, perguntas, num_perguntas, alternativas, pContador, quizzData = []) => {
+const handleQuizz = (msg, bot, perguntas, num_perguntas, alternativas, pContador, duelistas = [], quizzData = []) => {
 
     const medalhas = ['🥇', '🥈', '🥉'];
     const { tempo: tempo_pergunta, pontos: ponto_total, topico } = perguntas[0];
@@ -105,8 +107,14 @@ const handleQuizz = (msg, bot, perguntas, num_perguntas, alternativas, pContador
     msg.channel.send({ files: [pergunta_icon], embed }).then( message => {
         alternativas.forEach(alt => message.react(alt)); // Reagindo as alternativas (a, b, c, d).
 
-        const filter = (reaction, user) => // Filtro da coleta.
-            alternativas.includes(reaction.emoji.name) && !user.bot && !participantes.includes(user.id); 
+        let filter = null; // Filtro da coleta.
+        if (duelistas.length > 0) {
+            filter = (reaction, user) =>
+                alternativas.includes(reaction.emoji.name) && !user.bot && !participantes.includes(user.id) && duelistas.includes(user.id);
+        } else {
+            filter = (reaction, user) => 
+                alternativas.includes(reaction.emoji.name) && !user.bot && !participantes.includes(user.id);
+        }  
 
         const msgReaction = message.createReactionCollector(filter, { time: tempo_pergunta }); // Se quiser mudar o tempo alterar time
 
@@ -185,7 +193,7 @@ const handleQuizz = (msg, bot, perguntas, num_perguntas, alternativas, pContador
                 // Se não tiver próxima pergunta então quizz foi finalizado.
                 // Ou se ninguém responder nenhuma alternativa.
                 if (!perguntas[0] || collected.size === 0) {
-                    let resultadoQuizzEmbed = [];
+                    let resultadoQuizzEmbed = {};
                     if (quizzData.length === 0) resultadoQuizzEmbed = { name: 'Vencedor(a): ', value: 'Como nenhum participante repondeu ao quizz, **não foi possível definir o(a) vencedor(a)**' };
                     else if (quizzData[0].pontos === 0 ) resultadoQuizzEmbed = { name: 'Vencedor(a): ', value: 'Como nenhum dos participantes acertou pelo menos uma pergunta, **não foi possível deifinir o(a) vencedor(a)**.' };
                     else {
@@ -209,7 +217,7 @@ const handleQuizz = (msg, bot, perguntas, num_perguntas, alternativas, pContador
                     bot.quizz[msg.channel.id] = false; // Setando quizz como false possibilitando o início de outro quizz.
                 }
                 else
-                    handleQuizz(msg, bot, perguntas, num_perguntas, alternativas, ++pContador, quizzData);
+                    handleQuizz(msg, bot, perguntas, num_perguntas, alternativas, ++pContador, duelistas = duelistas, quizzData = quizzData);
             }, 12000);
         });
     });
