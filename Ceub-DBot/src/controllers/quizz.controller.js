@@ -176,7 +176,7 @@ const handleQuizz = (msg, bot, perguntas, num_perguntas, alternativas, pContador
                     ? `Parabéns à todos que acertaram! Vocês podem buscar esclarecimentos no tópico **${topico}** do livro.` 
                     : 'Droga! Parece que nenhum de vocês conseguiu quebrar essa barreira...\n' + 
                     `Mas não se desanimem! 📄 Parece que essa era uma pergunta do tipo **${topico}**! 📄 \n\nTenho certeza que vocês responder corretamente se melhorarem seus conhecimentos.` },
-                    { name: '\u200B', value: !perguntas[0] || collected.size === 0 ? 'Gerando arquivos finais... **Obtendo vencedor(a)**' : 'Retomando processo de quebra de barreiras... **Carregando próxima pergunta**...' }
+                    { name: '\u200B', value: !perguntas[0] || collected.size === 0 ? 'Gerando arquivos finais... **Obtendo vencedor(a)**...' : 'Retomando processo de quebra de barreiras... **Carregando próxima pergunta**...' }
                 ]);
             }, 7000);
 
@@ -194,8 +194,8 @@ const handleQuizz = (msg, bot, perguntas, num_perguntas, alternativas, pContador
                                 let addValue = currentValue.pontos === quizzData[0].pontos ? 1 : 0;
                                 return accumulator + addValue
                         }, 0);
-                        if (numVencedores > 1) resultadoQuizzEmbed = { name: 'Vencedores: ', value: quizzData.filter( d => d.pontos === quizzData[0].pontos ).forEach(v => `<@${v.id}>`).join('\n') };
-                        else resultadoQuizzEmbed = { name: '\u200B', value: `**Vencedor(a): <@${quizzData[0].id}>` };
+                        if (numVencedores > 1) resultadoQuizzEmbed = { name: '**Vencedores**: ', value: quizzData.filter( d => d.pontos === quizzData[0].pontos ).forEach(v => `<@${v.id}>`).join('\n') };
+                        else resultadoQuizzEmbed = { name: '\u200B', value: `**Vencedor(a)**: 🥇  <@${quizzData[0].id}>  🥇` };
                     }
                     if (collected.size === 0) {
                         sendEmbed(msg, 'WINNER', 'Quizz Finalizado', [
