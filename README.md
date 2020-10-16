@@ -29,3 +29,4 @@ Para fins didaticos o PREFIXO do Bot sera considerado "!"
     ```
     ````
 ## Duelo
+* ``!duelo {@usuário} {pontos} {quizz ou desafio} {topico(opcional)}``
