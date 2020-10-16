@@ -176,7 +176,7 @@ const handleQuizz = (msg, bot, perguntas, num_perguntas, alternativas, pContador
                     ? `Parabéns à todos que acertaram! Vocês podem buscar esclarecimentos no tópico **${topico}** do livro.` 
                     : 'Droga! Parece que nenhum de vocês conseguiu quebrar essa barreira...\n' + 
                     `Mas não se desanimem! 📄 Parece que essa era uma pergunta do tipo **${topico}**! 📄 \n\nTenho certeza que vocês responder corretamente se melhorarem seus conhecimentos.` },
-                    { name: '\u200B', value: !perguntas[0] || collected.size === 0 ? 'Gerando arquivos finais...' : 'Retomando processo de quebra de barreiras... **Carregando próxima pergunta**...' }
+                    { name: '\u200B', value: !perguntas[0] || collected.size === 0 ? 'Gerando arquivos finais... **Obtendo vencedor(a)**' : 'Retomando processo de quebra de barreiras... **Carregando próxima pergunta**...' }
                 ]);
             }, 7000);
 
@@ -186,8 +186,8 @@ const handleQuizz = (msg, bot, perguntas, num_perguntas, alternativas, pContador
                 // Ou se ninguém responder nenhuma alternativa.
                 if (!perguntas[0] || collected.size === 0) {
                     let resultadoQuizzEmbed = [];
-                    if (quizzData.length === 0) resultadoQuizzEmbed = { name: 'Vencedor: ', value: 'Como nenhum participante repondeu ao quizz, **não foi possível definir o vencedor**' };
-                    else if (quizzData[0].pontos === 0 ) resultadoQuizzEmbed = { name: 'Vencedor: ', value: 'Como nenhum dos participantes acertou pelo menos uma pergunta, **não foi possível deifinir o vencedor**.' };
+                    if (quizzData.length === 0) resultadoQuizzEmbed = { name: 'Vencedor(a): ', value: 'Como nenhum participante repondeu ao quizz, **não foi possível definir o(a) vencedor(a)**' };
+                    else if (quizzData[0].pontos === 0 ) resultadoQuizzEmbed = { name: 'Vencedor(a): ', value: 'Como nenhum dos participantes acertou pelo menos uma pergunta, **não foi possível deifinir o(a) vencedor(a)**.' };
                     else {
                         let numVencedores = quizzData.reduce(
                             (accumulator, currentValue) =>  {
@@ -195,7 +195,7 @@ const handleQuizz = (msg, bot, perguntas, num_perguntas, alternativas, pContador
                                 return accumulator + addValue
                         }, 0);
                         if (numVencedores > 1) resultadoQuizzEmbed = { name: 'Vencedores: ', value: quizzData.filter( d => d.pontos === quizzData[0].pontos ).forEach(v => `<@${v.id}>`).join('\n') };
-                        else resultadoQuizzEmbed = { name: '\u200B', value: `**Vencedor: <@${quizzData[0].id}>` };
+                        else resultadoQuizzEmbed = { name: '\u200B', value: `**Vencedor(a): <@${quizzData[0].id}>` };
                     }
                     if (collected.size === 0) {
                         sendEmbed(msg, 'WINNER', 'Quizz Finalizado', [
