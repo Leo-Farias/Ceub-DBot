@@ -22,7 +22,12 @@ bot.on('ready', () => {
     bot.quizz = {}; 
     console.log("=== BOT INICIADO ===");
     console.log("ENV:" ,ENV, "\nPREFIX:", PREFIX, "\n\n\n");
-})
+});
+
+const joinEvent = require('./src/events/join.event');
+bot.on('guildMemberAdd', async member => {
+    joinEvent.enviarDirect(bot, member);
+});
 
 
 bot.on('message', msg => { // Evento dispara sempre que alguém manda uma mensagem.
@@ -62,9 +67,6 @@ for (const file of commandFiles) {
     const command = require(`./src/commands/${file}`)
     bot.commands.set(command.name, command)
 }
-
-
-
 
 // Inicializando o bot.
 bot.login(token);
