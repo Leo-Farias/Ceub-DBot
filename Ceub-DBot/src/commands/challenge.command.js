@@ -3,6 +3,7 @@ const runTest = require('../utils/code/testRunner')
 const codeExtractor = require('../utils/code/codeExtractor')
 const logInfo = require('../utils/log/logCommandInfo')
 const { sendEmbed } = require('../utils/default-embeder')
+const PREFIX = process.env.PREFIX;
 
 /*
 &desafio submit
@@ -27,7 +28,7 @@ function submit(msg){
 
 
 
-const PREFIX = process.env.PREFIX;
+
 
 function challenge(msg) {
     const userCommand = commandParser(msg)
@@ -36,13 +37,13 @@ function challenge(msg) {
         case undefined:
             return msg.channel.send("Novo desafio")
             break;
-        case 'help':
+        case 'ajuda':
             return msg.channel.send("Menu de ajuda do desafio")
             break;
         case 'submit':
             return submit(msg)
             break;
-        case 'cancel':
+        case 'cancelar':
             return msg.channel.send("Cancelar desafio ativo...")
             break;
         default:
@@ -62,8 +63,8 @@ function challenge(msg) {
 module.exports = {
 	name: 'desafio',
 	description: {
-		title: `:boxing_glove:  ${PREFIX}duelo {@usuário} {pontos} {quizz ou desafio} {topico(opcional)}  :boxing_glove: `,
-		content: `Começa um duelo em uma das atividades (quizz ou desafio) apostando X pontos, o ganhador do duelo ganha essa quantia de pontos do outro participante.\n\n**Exemplo**: \`${PREFIX}duelo @participante 1000 quizz variavel \`\n`
+		title: `🎯  ${PREFIX}desafio {operação(opicional)}  🎯`,
+		content: `Exibe um desafio de python e suas instruções. Se quiser começar um novo desafio não informe nenhuma operação. Lista de Operações:\n**ajuda**: Menu de Ajuda do Desafio;\n**submit**: Enviar solução do desafio (neste caso escreva seu código logo após o "submit");\n**cancelar**: Cancelar desafio atual. \n\n**Exemplo**: \`${PREFIX}desafio\`\n\`${PREFIX}desafio submit print("Hello World")\`\n`
 	},
 	execute: challenge
 }
