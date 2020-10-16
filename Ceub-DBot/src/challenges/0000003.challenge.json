@@ -1,0 +1,15 @@
+{
+  "titulo_desafio": "Desafio de Multiplicar",
+  "descricao_desafio": "Crie uma funcao que permita multiplicar qualquer dois inteiros",
+  "dificuldade": "easy_1",
+  "testes": [
+    { "entrada": [4,5], "saida": 20},
+    { "entrada": [4,2], "saida": 8},
+    { "entrada": [42,25], "saida": 1050},
+    { "entrada": [0,5], "saida": 0},
+    { "entrada": [99,1], "saida": 99},
+    { "entrada": [9,2], "saida": 18},
+    { "entrada": [5,0.2], "saida": 1},
+    { "entrada": [-50,3], "saida": -150}
+  ]
+}

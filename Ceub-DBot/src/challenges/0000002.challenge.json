@@ -1,0 +1,15 @@
+{
+  "titulo_desafio": "Desafio de Subtrair",
+  "descricao_desafio": "Crie uma funcao que permita subtrair qualquer dois inteiros",
+  "dificuldade": "easy_1",
+  "testes": [
+    { "entrada": [4,-5], "saida": 9},
+    { "entrada": [4,-2], "saida": 6},
+    { "entrada": [-42,25], "saida": -67},
+    { "entrada": [0,5], "saida": -5},
+    { "entrada": [-99,1], "saida": -100},
+    { "entrada": [9,2], "saida": 7},
+    { "entrada": [5,2], "saida": 3},
+    { "entrada": [-50,-3], "saida": -47}
+  ]
+}

@@ -4,7 +4,6 @@ const path = require('path')
 module.exports = {
     development: {
         client: 'mysql2',
-        version: '5.7',
         connection: {
             host: process.env.DB_HOST || 'localhost',
             user: process.env.DB_USER || 'root',

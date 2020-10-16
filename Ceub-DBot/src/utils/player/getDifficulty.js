@@ -1,22 +1,22 @@
 const DifficultyDAO = require('../../database/DAO/difficulty.dao')
 
-function playerDifficulty(playerLevel){
-    DifficultyDAO.getDifficulty()
-    .then((results) => {
-        const dificuldades = results
+async function playerDifficulty(playerLevel){
+    const difficulty = await DifficultyDAO.getDifficulty()
         var playerDiff = []
-        for (let i = 0; i <= dificuldades.length - 1; i++){
-            if((dificuldades[i].max >= playerLevel) && (dificuldades[i].min <= playerLevel)){
-                if(dificuldades[i-2] !== undefined) playerDiff.push(dificuldades[i-2])
-                if(dificuldades[i-1] !== undefined) playerDiff.push(dificuldades[i-1])
-                playerDiff.push(dificuldades[i])
-                if(dificuldades[i+1] !== undefined) playerDiff.push(dificuldades[i+1])
-                if(dificuldades[i+2] !== undefined) playerDiff.push(dificuldades[i+2])
+        for (let i = 0; i <= difficulty.length - 1; i++){
+            if((difficulty[i].max >= playerLevel) && (difficulty[i].min <= playerLevel)){
+                if(difficulty[i-2] !== undefined) playerDiff.push(difficulty[i-2])
+                if(difficulty[i-1] !== undefined) playerDiff.push(difficulty[i-1])
+                playerDiff.push(difficulty[i])
+                if(difficulty[i+1] !== undefined) playerDiff.push(difficulty[i+1])
+                if(difficulty[i+2] !== undefined) playerDiff.push(difficulty[i+2])
 
                 return playerDiff
             }
         }
-    })
 }
+/* USAGE EXAMPLE
 
+*/
+playerDifficulty(5).then((result) => console.log(result))
 module.exports = playerDifficulty
