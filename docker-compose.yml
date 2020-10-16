@@ -19,7 +19,7 @@ services:
   bot:
     build: ./Ceub-DBot
     volumes: 
-      - ./Ceub-DBot:/opt/Ceub-DBot
+      - ./:/opt
     working_dir: /opt/Ceub-DBot
     environment:
       ENV: development
