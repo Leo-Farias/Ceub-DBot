@@ -22,10 +22,10 @@ Para fins didaticos o PREFIXO do Bot sera considerado "!"
 ## Desafios
 *
     ````
-    !desafio run
+    !desafio submit
     ```
     def soma(numeros):
-        return round(numeros[0] + numeros[1], 2)
+        return numeros[0] + numeros[1]
     ```
     ````
 ## Duelo
