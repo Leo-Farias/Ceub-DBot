@@ -43,7 +43,7 @@ bot.on('message', msg => { // Evento dispara sempre que alguém manda uma mensag
     
     // Filtra mensagens de bot
     if (msg.author.bot) return
-
+    console.log("NOT BOT")
     if ((/windows/i.test(msg.content))){
         sendEmbed(msg, 'ERROR', 'ERRO 417: EXPECTATION FAILED', [
             { name:'\u200B', value: `LINUX > WINDOWS` }
