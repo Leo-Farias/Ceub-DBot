@@ -37,6 +37,18 @@ bot.on('message', msg => { // Evento dispara sempre que alguém manda uma mensag
         ])
     }
 
+    if ((!msg.author.bot) && (/não sei|n sei|n sei o q fazer|Não sei o que fazer|n sei o que fazer|Estou com dúvida|Quais são os comandos|Como usa os comandos/i.test(msg.content))){
+        sendEmbed(msg, 'ALERT', 'Fique tranquilo vai dar tudo certo!', [
+            { name:'\u200B', value: `**Busque mais informações sobre o assunto com o comando !ajuda**` }
+        ])
+    }
+
+    if ((!msg.author.bot) && (/LeFiF|lefif|LEFIF/i.test(msg.content))){
+        sendEmbed(msg, 'TIME', 'Essa é a história de vida do LeFiF', [
+            { name:'\u200B', value: `**Nesse mundo uma empresa de tecnologia, chamada Elgoog, se tornou dona de cerca de 95% de todos os aparelhos tecnológicos e seus respectivos softwares, é praticamente impossível conhecer alguém que não possui um de seus produtos. Porém o que as pessoas comuns não sabem é que o verdadeiro plano da Elgoog é de controlar todas as pessoas às tornando escravas de seus produtos. Percebendo o plano maligno dessa empresa, o senhor A e sua equipe, os Tux, criaram uma inteligência artificial para recrutar e ensinar as pessoas à se defender da Elgoog, o Learn to Fight for Freedom (LeFiF).**` }
+        ])
+    }
+
     // Filtra mensagens de bot
     if (msg.author.bot) return
     // Filtra mensagem apenas para aqueles que começam com o prefixo correto
