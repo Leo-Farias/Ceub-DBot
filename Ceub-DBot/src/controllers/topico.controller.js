@@ -9,9 +9,9 @@ const validarTopico = (livro, topico_usuario) => {
 
 const obterSmartTopico = (topico) => {
     // PODEMOS FAZER O REPLACE PARA ACEITAR VALORES ALÉM DAS CHAVES DO OBJETO LIVRO
-    return topico.toLowerCase().replace(/variavel|variável+/g, 'var')
-        .replace(/funcao|funçao|função+/g, 'func')
-        .replace(/intro|introduc|introdução+/g, 'introducao')
+    return topico.toLowerCase().replace(/variavel|variável/g, 'var')
+        .replace(/funcao|funçao|função/g, 'func')
+        .replace(/^intro$|^introducao$|^introdução$/g, 'introducao')
         .replace(/dado|dados+/g, 'dados');
 }
 

@@ -43,7 +43,7 @@ bot.on('message', msg => { // Evento dispara sempre que alguém manda uma mensag
     
     // Filtra mensagens de bot
     if (msg.author.bot) return
-    console.log("NOT BOT")
+
     if ((/windows/i.test(msg.content.toLowerCase()))){
         sendEmbed(msg, 'ERROR', 'ERRO 417: EXPECTATION FAILED', [
             { name:'\u200B', value: `LINUX > WINDOWS` }
@@ -79,7 +79,7 @@ bot.on('message', msg => { // Evento dispara sempre que alguém manda uma mensag
 
     
     // Tratamento de comandos
-    let command = bot.commands.get(args[0])
+    let command = bot.commands.get(args[0].toLowerCase())
     if(!command){
         sendEmbed(msg, 'ALERT', 'ERRO 404: COMANDO NÃO ENCONTRADO.', [
             { name:'\u200B', value: `Não foi possível encontrar o comando \`${args[0]}\` na base de dados.\nDigite **${PREFIX}ajuda** para obter uma lista de comandos.` }

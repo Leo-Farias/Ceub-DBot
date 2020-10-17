@@ -10,6 +10,7 @@
     { "entrada": [-99,1], "saida": -100},
     { "entrada": [9,2], "saida": 7},
     { "entrada": [5,2], "saida": 3},
-    { "entrada": [-50,-3], "saida": -47}
+    { "entrada": [-50,-3], "saida": -47},
+    { "entrada": [4,3], "saida": 1}
   ]
 }

@@ -9,7 +9,14 @@ const PREFIX = process.env.PREFIX;
 &desafio submit
 ```
 def soma(numeros):
-  assert numeros[0] + numeros[1]
+  return numeros[0] + numeros[1]
+```
+*/
+/*
+&desafio submit
+```
+def soma(numeros):
+  return numeros[0] - numeros[1]
 ```
 */
 function submit(msg){

@@ -32,7 +32,7 @@ const aceitarDuelo = (msg, bot, target, command, outrosValores) => {
                 [{name: '\u200B', value: 'Tempo para aceitar o duelo esgotado. Utilize o comando novamente para iniciar o duelo.'}]);
             else {
                 startDuel === true 
-                ? command.execute(msg, bot, duelo = true, duelistas = [msg.author.id, target], outrosValores = outrosValores)
+                ? command.execute(msg, bot, true, [msg.author.id, target], outrosValores)
                 : sendEmbed(msg, 'ERROR', 'DUELO REJEITADO.', 
                 [{name: '\u200B', value: `<@${target}> recusou o duelo.`}]);
             }

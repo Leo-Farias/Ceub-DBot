@@ -13,6 +13,7 @@ os.environ['CHALLENGE_FILE'] = '/home/fpc-deb/Git/Ceub-DBot/src/tmp/0000001.chal
 os.environ['USER_FILE'] = '/home/fpc-deb/Git/Ceub-DBot/src/tmp/41979351.py'
 os.environ['USER_MODULE'] = '41979351'
 '''
+os.environ['CHALLENGE_FILE'] = '/opt/Ceub-DBot/src/challenges/0000002.challenge.json'
 
 tmp_dir_path = os.environ['TMP_DIR']
 challenge_file = os.environ['CHALLENGE_FILE']

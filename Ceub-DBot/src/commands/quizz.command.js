@@ -3,15 +3,15 @@ const PREFIX = process.env.PREFIX;
 const TopicoController = require('../controllers/topico.controller.js');
 const DificuldadeController = require('../controllers/dificuldade.controller.js');
 
-const executarQuizz = (msg, bot, isDuelo = false, duelistas = [], outrosValores = []) => {
+const executarQuizz = (msg, bot, duelo = false, duelistas = [], outrosValores = []) => {
     if(!bot.quizz[msg.channel.id]) {
         let pContador = 0;
         let [ALTERNATIVAS, perguntas] = [null, null];
-        isDuelo === true 
+        duelo === true 
         ? [ALTERNATIVAS, perguntas] = QuizzController.obterInfoQuizz(msg, bot, outrosValores, TopicoController, DificuldadeController, 10)
         : [ALTERNATIVAS, perguntas] = QuizzController.obterInfoQuizz(msg, bot, msg.content.substring(PREFIX.length).split(" "), TopicoController, DificuldadeController, 10);
         if (ALTERNATIVAS || perguntas) {
-            isDuelo === true
+            duelo === true
             ? QuizzController.handleQuizz(msg, bot, perguntas, perguntas.length, ALTERNATIVAS, pContador, duelistas = duelistas)
             : QuizzController.handleQuizz(msg, bot, perguntas, perguntas.length, ALTERNATIVAS, pContador);
         } 
